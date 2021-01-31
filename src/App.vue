@@ -1,6 +1,7 @@
 <!--
- * @Author: YaleXin
- * @Email: me@yalexin.top
+ * @Author      : YaleXin
+ * @Email       : me@yalexin.top
+ * @LastEditors : YaleXin
 -->
 <template>
   <div id="app">

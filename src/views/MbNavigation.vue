@@ -1,6 +1,7 @@
 <!--
- * @Author: YaleXin
- * @Email: me@yalexin.top
+ * @Author      : YaleXin
+ * @Email       : me@yalexin.top
+ * @LastEditors : YaleXin
 -->
 <template>
   <div>
@@ -24,9 +25,7 @@
 
       <el-row :span="10">
         <el-col>
-          <el-menu default-active="1"
-          @select="handleSelect"
-          >
+          <el-menu default-active="1" @select="handleSelect">
             <el-menu-item index="1">
               <template slot="title">
                 <i class="el-icon-s-home"></i>
@@ -61,6 +60,14 @@
                 <span>最近的吐槽</span>
               </template>
             </el-menu-item>
+
+            <el-menu-item index="99">
+              <div>
+                <el-form :inline="true" :model="searchForm" >
+                  <el-input placeholder="搜一搜？" prefix-icon="el-icon-search" @keyup.native.enter="onSubmit"  v-model="searchForm.content"></el-input>
+                </el-form>
+              </div>
+            </el-menu-item>
           </el-menu>
         </el-col>
       </el-row>
@@ -74,11 +81,19 @@ export default {
   components: {},
   data() {
     return {
-      showNvg: false
+      showNvg: false,
+      searchForm: {
+        content: ""
+      }
     };
   },
   methods: {
     handleSelect(key, keyPath) {
+      if(key !== "99")this.showNvg = false;
+      this.$emit("mbClick", key);
+    },
+    onSubmit() {
+      alert("submit" + this.searchForm.content);
       this.showNvg = false;
     }
   }

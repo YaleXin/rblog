@@ -1,11 +1,17 @@
 /*
- * @Author: YaleXin
- * @Email: me@yalexin.top
+ * @Author      : YaleXin
+ * @Email       : me@yalexin.top
+ * @LastEditors : YaleXin
  */
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+
+// import Axios from 'axios'
+// Vue.prototype.$axios = Axios;
+// Axios.defaults.withCredentials = true;
+// Axios.defaults.baseURL = '/';
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';

@@ -1,11 +1,12 @@
 <!--
- * @Author: YaleXin
- * @Email: me@yalexin.top
+ * @Author      : YaleXin
+ * @Email       : me@yalexin.top
+ * @LastEditors : YaleXin
 -->
 <template>
     <div>
-        <mb-navigation v-if="isMobie"></mb-navigation>
-        <pc-navigation v-else></pc-navigation>
+        <mb-navigation @mbClick="choose" v-if="isMobie"></mb-navigation>
+        <pc-navigation @pcClick="choose" v-else></pc-navigation>
     </div>
 </template>
 
@@ -28,7 +29,12 @@ export default {
     created() {
         const wd = document.body.clientWidth;
         if (wd <= 700) this.isMobie = true;
-    }
+    },
+    methods: {
+        choose(index) {
+            this.$emit('childClick', index)
+        },
+    },
 }
 </script>
 
