@@ -5,8 +5,10 @@
 -->
 <template>
   <div>
-    <el-card class="box-card">
-      <router-view></router-view>
+    <el-card class="box-card-wrapper">
+      <div class="box-card">
+        <router-view></router-view>
+      </div>
     </el-card>
   </div>
 </template>
@@ -19,7 +21,8 @@ export default {
 </script>
 
 <style scoped>
-.box-card{
-    height: 100%;
+.box-card {
+  max-width: 1000px;
+  margin: 0 auto;
 }
 </style>

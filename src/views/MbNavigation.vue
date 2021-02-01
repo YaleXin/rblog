@@ -12,7 +12,9 @@
             <font-awesome-icon @click="showNvg=true" icon="bars" size="lg" />
           </div>
         </el-col>
-        <el-col :span="22"></el-col>
+        <el-col class="motto-wrapper" :span="22">
+          <div class="motto">要么改变世界，要么适应世界</div>
+        </el-col>
       </el-row>
     </div>
 
@@ -63,8 +65,13 @@
 
             <el-menu-item index="99">
               <div>
-                <el-form :inline="true" :model="searchForm" >
-                  <el-input placeholder="搜一搜？" prefix-icon="el-icon-search" @keyup.native.enter="onSubmit"  v-model="searchForm.content"></el-input>
+                <el-form :inline="true" :model="searchForm">
+                  <el-input
+                    placeholder="搜一搜？"
+                    prefix-icon="el-icon-search"
+                    @keyup.native.enter="onSubmit"
+                    v-model="searchForm.content"
+                  ></el-input>
                 </el-form>
               </div>
             </el-menu-item>
@@ -89,7 +96,7 @@ export default {
   },
   methods: {
     handleSelect(key, keyPath) {
-      if(key !== "99")this.showNvg = false;
+      if (key !== "99") this.showNvg = false;
       this.$emit("mbClick", key);
     },
     onSubmit() {
@@ -110,5 +117,13 @@ export default {
   padding-top: 50%;
   padding-bottom: 50%;
   padding-left: 5px;
+  color: white;
 }
+.motto-wrapper{
+  color: white;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+}
+
 </style>

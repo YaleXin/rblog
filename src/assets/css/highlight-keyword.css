@@ -1,0 +1,39 @@
+/*
+	 * Custom keyword styles
+	 */
+	.token.keyword.keyword-return, .token.keyword.keyword-if{
+		color: #EE0BC1;
+	}
+	.token.keyword.keyword-void,
+	.token.keyword.keyword-char,
+	.token.keyword.keyword-unsigned,
+	.token.keyword.keyword-short,
+	.token.keyword.keyword-float,
+	.token.keyword.keyword-byte,
+	.token.keyword.keyword-int,
+	.token.keyword.keyword-long,
+	.token.keyword.keyword-double,
+	.token.keyword.keyword-string,
+	.token.keyword.keyword-object,
+	.token.keyword.keyword-boolean{
+	   color: #66d9ef;
+	}
+
+	.token.function{
+        color: #5cb85c;
+    }
+    .token.operator{
+        color: #FFD40A;
+    }
+
+    .token.keyword.keyword-class,
+    .token.keyword.keyword-public,
+    .token.keyword.keyword-static,
+    .token.keyword.keyword-protected,
+    .token.keyword.keyword-private{
+	   color: #CB602D;
+	}
+	.token.class-name{
+	    color: #DEC56C;
+	}
+

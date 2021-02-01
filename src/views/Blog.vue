@@ -4,9 +4,11 @@
  * @LastEditors : YaleXin
 -->
 <template>
-  <div>
+  <div class="my-blog">
+    <to-top></to-top>
     <navigation @childClick="navigationClick"></navigation>
     <main-content class="mainBody"></main-content>
+
     <blog-footer></blog-footer>
   </div>
 </template>
@@ -15,12 +17,14 @@
 import Navigation from "./Navigation.vue";
 import MainContent from "./Main.vue";
 import BlogFooter from "./Footer.vue";
+import ToTop from "../components/ToTop.vue";
 export default {
   name: "Blog",
   components: {
     Navigation,
     MainContent,
-    BlogFooter
+    BlogFooter,
+    ToTop
   },
   methods: {
     navigationClick(index) {
@@ -57,5 +61,6 @@ export default {
 <style scoped>
 .mainBody {
   min-height: 300px;
+  overflow: auto;
 }
 </style>

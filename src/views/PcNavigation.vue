@@ -34,9 +34,17 @@
       <el-menu-item>
         <div>
           <el-form :inline="true" :model="searchForm">
-            <el-input placeholder="搜一搜？" prefix-icon="el-icon-search" @keyup.native.enter="onSubmit" v-model="searchForm.content"></el-input>
+            <el-input
+              placeholder="搜一搜？"
+              prefix-icon="el-icon-search"
+              @keyup.native.enter="onSubmit"
+              v-model="searchForm.content"
+            ></el-input>
           </el-form>
         </div>
+      </el-menu-item>
+      <el-menu-item>
+        要么改变世界，要么适应世界
       </el-menu-item>
     </el-menu>
   </div>
@@ -48,7 +56,6 @@ export default {
   components: {},
   data() {
     return {
-      activeIndex: "1",
       searchForm: {
         content: ""
       }
@@ -60,6 +67,39 @@ export default {
     },
     onSubmit() {
       alert("submit" + this.searchForm.content);
+    },
+    getRout() {
+      const routePath = this.$route.path;
+      console.log(routePath);
+    }
+  },
+  created() {},
+  mounted() {},
+  computed: {
+    activeIndex: function() {
+      const routePath = this.$route.path;
+      let activeIndex = "0";
+      switch (routePath) {
+        case "/":
+        case "/home":
+          activeIndex = "1";
+          break;
+        case "/category":
+          activeIndex = "2";
+          break;
+        case "/tag":
+          activeIndex = "3";
+          break;
+        case "/link":
+          activeIndex = "4";
+          break;
+        case "/talk":
+          activeIndex = "5";
+          break;
+        default:
+          activeIndex = "-1";
+      }
+      return activeIndex;
     }
   }
 };
