@@ -34,10 +34,10 @@
 }
 
 /* 去掉各Table cell 的边距并让其边重合 */
-.typo table {
+/* .typo table {
   border-collapse: collapse;
   border-spacing: 0;
-}
+} */
 
 /* 去除默认边框 */
 .typo fieldset, img {

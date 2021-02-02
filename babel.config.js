@@ -4,9 +4,9 @@ module.exports = {
   ],
   plugins: [
     ["prismjs", {
-      "languages": ["javascript", "css", "markup"],
-      "plugins": ["line-numbers"], //配置显示行号插件
-      "theme": "okaidia", //主体名称
+      "languages": ["javascript", "css", "markup", "c", "java", "clike", "json", "python"],
+      "plugins": ["line-numbers", "show-language", "highlight-keywords", "match-braces","copy-to-clipboard"],
+      "theme": "dark", 
       "css": true
     }]
   ]

@@ -27,7 +27,7 @@
 
       <el-row :span="10">
         <el-col>
-          <el-menu default-active="1" @select="handleSelect">
+          <el-menu :default-active="activeIndex" @select="handleSelect">
             <el-menu-item index="1">
               <template slot="title">
                 <i class="el-icon-s-home"></i>
@@ -93,6 +93,33 @@ export default {
         content: ""
       }
     };
+  },
+  computed: {
+    activeIndex: function() {
+      const routePath = this.$route.path;
+      let activeIndex = "0";
+      switch (routePath) {
+        case "/":
+        case "/home":
+          activeIndex = "1";
+          break;
+        case "/category":
+          activeIndex = "2";
+          break;
+        case "/tag":
+          activeIndex = "3";
+          break;
+        case "/link":
+          activeIndex = "4";
+          break;
+        case "/talk":
+          activeIndex = "5";
+          break;
+        default:
+          activeIndex = "-1";
+      }
+      return activeIndex;
+    }
   },
   methods: {
     handleSelect(key, keyPath) {

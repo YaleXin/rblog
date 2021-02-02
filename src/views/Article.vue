@@ -188,7 +188,9 @@ org.apache.catalina.session.StandardSessionFacade@7fa755a9
             <a href="#appendix1"># 附录一</a>
           </sup>，需要精心设计，而这个设计却是常被视觉设计师所忽略的。前端工程师更常看到这样的问题，但不便变更。因为在多个 OS 中的不同浏览器渲染不同，改动需要多的时间做回归测试，所以改变变得更困难。而像我们一般使用的
           Yahoo、Eric Meyer 和 Alice base.css 中采用的 Reset 都没有很好地考虑中文排版。
-          <i class="serif">Typo.css</i> 要做的就是解决中文排版的问题。
+          <i
+            class="serif"
+          >Typo.css</i> 要做的就是解决中文排版的问题。
         </p>
 
         <p>
@@ -196,67 +198,69 @@ org.apache.catalina.session.StandardSessionFacade@7fa755a9
             <i class="serif">Typo.css</i> 测试于如下平台：
           </strong>
         </p>
-        <table summary="Typo.css 的测试平台列表">
-          <thead>
-            <tr>
-              <th>OS/浏览器</th>
-              <th>Firefox</th>
-              <th>Chrome</th>
-              <th>Safari</th>
-              <th>Opera</th>
-              <th>IE9</th>
-              <th>IE8</th>
-              <th>IE7</th>
-              <th>IE6</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>OS X</td>
-              <td>✔</td>
-              <td>✔</td>
-              <td>✔</td>
-              <td>✔</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-            </tr>
-            <tr>
-              <td>Win 7</td>
-              <td>✔</td>
-              <td>✔</td>
-              <td>✔</td>
-              <td>✔</td>
-              <td>✔</td>
-              <td>✔</td>
-              <td>✔</td>
-              <td>-</td>
-            </tr>
-            <tr>
-              <td>Win XP</td>
-              <td>✔</td>
-              <td>✔</td>
-              <td>✔</td>
-              <td>✔</td>
-              <td>-</td>
-              <td>✔</td>
-              <td>✔</td>
-              <td>✔</td>
-            </tr>
-            <tr>
-              <td>Ubuntu</td>
-              <td>✔</td>
-              <td>✔</td>
-              <td>-</td>
-              <td>✔</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-            </tr>
-          </tbody>
-        </table>
+        <div style="width: 100%; overflow-x: auto;">
+          <table summary="Typo.css 的测试平台列表">
+            <thead>
+              <tr>
+                <th>OS/浏览器</th>
+                <th>Firefox</th>
+                <th>Chrome</th>
+                <th>Safari</th>
+                <th>Opera</th>
+                <th>IE9</th>
+                <th>IE8</th>
+                <th>IE7</th>
+                <th>IE6</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>OS X</td>
+                <td>✔</td>
+                <td>✔</td>
+                <td>✔</td>
+                <td>✔</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Win 7</td>
+                <td>✔</td>
+                <td>✔</td>
+                <td>✔</td>
+                <td>✔</td>
+                <td>✔</td>
+                <td>✔</td>
+                <td>✔</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>Win XP</td>
+                <td>✔</td>
+                <td>✔</td>
+                <td>✔</td>
+                <td>✔</td>
+                <td>-</td>
+                <td>✔</td>
+                <td>✔</td>
+                <td>✔</td>
+              </tr>
+              <tr>
+                <td>Ubuntu</td>
+                <td>✔</td>
+                <td>✔</td>
+                <td>-</td>
+                <td>✔</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <h4>中文排版的重点和难点</h4>
 
@@ -335,7 +339,9 @@ org.apache.catalina.session.StandardSessionFacade@7fa755a9
         <p>
           宋代著名学者
           <u class="typo-u">朱熹</u>对此章评价极高，说它是「入道之门，积德之基」。本章这三句话是人们非常熟悉的。历来的解释都是：学了以后，又时常温习和练习，不也高兴吗等等。三句话，一句一个意思，前后句子也没有什么连贯性。但也有人认为这样解释不符合原义，指出这里的「学」不是指学习，而是指学说或主张；「时」不能解为时常，而是时代或社会的意思，「习」不是温习，而是使用，引申为采用。而且，这三句话不是孤立的，而是前后相互连贯的。这三句的意思是：自己的学说，要是被社会采用了，那就太高兴了；退一步说，要是没有被社会所采用，可是很多朋友赞同
-          <abbr title="张燕婴">我</abbr>的学说，纷纷到我这里来讨论问题，我也感到快乐；再退一步说，即使社会不采用，人们也不理解我，我也不怨恨，这样做，不也就是君子吗？（见《齐鲁学刊》1986年第6期文）这种解释可以自圆其说，而且也有一定的道理，供读者在理解本章内容时参考。
+          <abbr
+            title="张燕婴"
+          >我</abbr>的学说，纷纷到我这里来讨论问题，我也感到快乐；再退一步说，即使社会不采用，人们也不理解我，我也不怨恨，这样做，不也就是君子吗？（见《齐鲁学刊》1986年第6期文）这种解释可以自圆其说，而且也有一定的道理，供读者在理解本章内容时参考。
         </p>
 
         <p>此外，在对「人不知，而不愠」一句的解释中，也有人认为，「人不知」的后面没有宾语，人家不知道什么呢？当时因为孔子有说话的特定环境，他不需要说出知道什么，别人就可以理解了，却给后人留下一个谜。有人说，这一句是接上一句说的，从远方来的朋友向我求教，我告诉他，他还不懂，我却不怨恨。这样，「人不知」就是「人家不知道我所讲述的」了。这样的解释似乎有些牵强。</p>
@@ -696,18 +702,123 @@ h5,h6{font-size:1em;}
           <a href="//zh.wikipedia.org/wiki/MIT_License">MIT License</a> 开源，使用代码只需说明来源，或者引用
           <a href="//typo.sofi.sh/license.txt">license.txt</a> 即可。
         </p>
+
+        <p>--------------------------------</p>
+        <pre><code class="language-c">#include &lt;Stdio.h&gt;
+int main(){
+    printf(&quot;hello world\n&quot;);
+    return 0;
+}
+</code></pre>
+        <hr />
+        <pre><code class="language-java">class Test{
+    public static void main(String[] args) {
+        System.out.println(&quot;hello world&quot;);
+    }    
+}
+
+</code></pre>
+        <p>====================</p>
+
+        <hr />
+        <div style="width: 100%; overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>OS/浏览器</th>
+                <th>Firefox</th>
+                <th>Chrome</th>
+                <th>Safari</th>
+                <th>Opera</th>
+                <th>IE9</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>张三</td>
+                <td>1</td>
+                <td>计科</td>
+                <td>普通</td>
+                <td>信息工程</td>
+                <td>123</td>
+              </tr>
+              <tr>
+                <td>张三</td>
+                <td>1</td>
+                <td>计科</td>
+                <td>普通</td>
+                <td>信息工程</td>
+                <td>123</td>
+              </tr>
+              <tr>
+                <td>张三</td>
+                <td>1</td>
+                <td>计科</td>
+                <td>普通</td>
+                <td>信息工程</td>
+                <td>123</td>
+              </tr>
+              <tr>
+                <td>李四</td>
+                <td>2</td>
+                <td>软件</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>=========</p>
+        <img src="https://q.yalexin.top/14.jpg" class="ui rounded image fancy-box-img" alt />
+        <img src="https://q.yalexin.top/15.jpg" class="ui rounded image fancy-box-img" alt />
+        <img src="https://q.yalexin.top/16.jpg" class="ui rounded image fancy-box-img" alt />
+        <img src="https://q.yalexin.top/17.jpg" class="ui rounded image fancy-box-img" alt />
+        <img src="https://q.yalexin.top/18.jpg" class="ui rounded image fancy-box-img" alt />
       </div>
+      <comment class="comment-card"></comment>
     </el-card>
   </div>
 </template>
 
 <script>
+$(document).ready(function() {
+  console.log("ready");
+  $('[data-fancybox="gallery"]').fancybox({
+    buttons: ["share", "close", "download"],
+    hash: false
+  });
+});
+import Comment from "../components/Comment.vue";
 import Prism from "prismjs";
 export default {
   name: "Article",
-  components: {},
-  mounted() {
+  components: {
+    Comment
+  },
+  activated() {
     Prism.highlightAll();
+    console.log("activated");
+  },
+  created() {
+    console.log("creat");
+  },
+  methods: {
+    open(e) {}
+  },
+  mounted() {
+    let imgNodeArray = document.querySelectorAll(".fancy-box-img");
+    imgNodeArray.forEach(imgNode => {
+      let aNode = document.createElement("a");
+      aNode.href = imgNode.getAttribute("src");
+      aNode.setAttribute("data-transition-effect", "zoom-in-out");
+      aNode.setAttribute("data-animation-effect", "slide");
+      aNode.setAttribute("data-fancybox", "gallery");
+      aNode.setAttribute("data-capion", "这是一张图片");
+      imgNode.parentNode.appendChild(aNode);
+      aNode.appendChild(imgNode);
+      aNode.style.border = "none";
+    });
   },
   data() {
     return {
@@ -717,8 +828,31 @@ export default {
         date: "2019-2-3",
         ctgr: "分类一",
         read: 12,
+        commentEnable: true,
         content: ""
-      }
+      },
+      tableData: [
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1517 弄"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1519 弄"
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        }
+      ]
     };
   },
   props: {
@@ -741,4 +875,35 @@ export default {
 
 <style scoped>
 @import "../assets/css/typo.css";
+
+table {
+  overflow-x: auto;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*鼠标悬停在表格上时，表格的背景和鼠标的形状*/
+table tr:hover {
+  background-color: #66d9ef !important;
+  cursor: pointer;
+}
+
+/*表格头部*/
+table thead {
+  font-weight: bolder;
+  background-color: #a2a5a7;
+}
+/*even为偶数行 odd为奇数行
+    设置表格的主体部分偶数行的样式
+  */
+table tbody tr:nth-child(even) {
+  background-color: rgb(241, 241, 241);
+}
+img.rounded {
+  border-radius: 10px;
+}
+.comment-card {
+  margin-top: 10px;
+}
 </style>

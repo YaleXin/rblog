@@ -7,7 +7,9 @@
   <div>
     <el-card class="box-card-wrapper">
       <div class="box-card">
-        <router-view></router-view>
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
       </div>
     </el-card>
   </div>

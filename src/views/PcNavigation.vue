@@ -31,7 +31,7 @@
         <i class="el-icon-mic"></i>最近的吐槽
       </el-menu-item>
 
-      <el-menu-item>
+      <el-menu-item index="6">
         <div>
           <el-form :inline="true" :model="searchForm">
             <el-input
@@ -43,7 +43,7 @@
           </el-form>
         </div>
       </el-menu-item>
-      <el-menu-item>
+      <el-menu-item index="7">
         要么改变世界，要么适应世界
       </el-menu-item>
     </el-menu>
