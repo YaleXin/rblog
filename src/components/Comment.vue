@@ -6,15 +6,15 @@
 <template>
   <div>
     <el-divider content-position="center">
-      开始评论
-      <i class="el-icon-edit"></i>
-    </el-divider>
-    <comment-input></comment-input>
-    <el-divider content-position="center">
       历史评论
       <i class="el-icon-s-comment"></i>
     </el-divider>
     <comment-list></comment-list>
+    <el-divider content-position="center">
+      开始评论
+      <i class="el-icon-edit"></i>
+    </el-divider>
+    <comment-input></comment-input>
   </div>
 </template>
 

@@ -33,10 +33,10 @@ export default {
           this.$router.replace("/home").catch(e => {});
           break;
         case "2":
-          this.$router.replace("/category").catch(e => {});
+          this.$router.replace("/category/-1").catch(e => {});
           break;
         case "3":
-          this.$router.replace("/tag").catch(e => {});
+          this.$router.replace("/tag/-1").catch(e => {});
           break;
         case "4":
           this.$router.replace("/link").catch(e => {});

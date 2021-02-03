@@ -5,6 +5,16 @@
 -->
 <template>
   <div>
+    <el-card>
+      <el-tag
+        v-for="(ctgr, index) in categoryList"
+        :type="activedIndex === index ? '' : 'info'"
+        :key="ctgr.id"
+      >
+        <a :href="'/category/' + ctgr.id">{{ctgr.name}}</a>
+      </el-tag>
+    </el-card>
+    <el-divider content-position="center">该分类下的文章</el-divider>
     <article-list :articleList="articleList"></article-list>
   </div>
 </template>
@@ -36,11 +46,49 @@ export default {
         { id: 2, title: "分类 题目3", dscr: "描述3" },
         { id: 3, title: "分类 题目4", dscr: "描述4" },
         { id: 4, title: "分类 题目5", dscr: "描述5" }
-      ]
+      ],
+      categoryList: [
+        { id: 10, name: "分类一" },
+        { id: 11, name: "分类二" },
+        { id: 22, name: "分类三" },
+        { id: 33, name: "分类三" },
+        { id: 44, name: "分类三" },
+        { id: 55, name: "分类三" },
+        { id: 66, name: "分类三" },
+        { id: 77, name: "分类三" }
+      ],
+      activedIndex: -1,
+      activedCategoryExist: false
     };
+  },
+  created() {},
+  activated() {
+    const routePath = this.$route.path;
+    let id = parseInt(routePath.slice(10, routePath.length));
+    if (id === -1) {
+      // 默认显示第一条
+      this.activedIndex = 0;
+      this.activedCategoryExist = true;
+    } else if (id !== NaN) {
+      for (let index = 0; index < this.categoryList.length; index++) {
+        if (id === this.categoryList[index].id) {
+          this.activedIndex = index;
+          this.activedCategoryExist = true;
+          break;
+        }
+        // if ()
+      }
+    }
+    if (this.activedIndex == -1) {
+      this.articleList = [];
+    }
   }
 };
 </script>
 
 <style scoped>
+.el-tag > a {
+  text-decoration: none;
+  color: #000;
+}
 </style>

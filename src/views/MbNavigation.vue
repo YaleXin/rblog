@@ -98,25 +98,31 @@ export default {
     activeIndex: function() {
       const routePath = this.$route.path;
       let activeIndex = "0";
-      switch (routePath) {
-        case "/":
-        case "/home":
-          activeIndex = "1";
-          break;
-        case "/category":
-          activeIndex = "2";
-          break;
-        case "/tag":
-          activeIndex = "3";
-          break;
-        case "/link":
-          activeIndex = "4";
-          break;
-        case "/talk":
-          activeIndex = "5";
-          break;
-        default:
-          activeIndex = "-1";
+      if (routePath.indexOf("/category/") > -1) {
+        activeIndex = "2";
+      } else if (routePath.indexOf("/tag/") > -1) {
+        activeIndex = "3";
+      } else {
+        switch (routePath) {
+          case "/":
+          case "/home":
+            activeIndex = "1";
+            break;
+          // case "/category":
+          //   activeIndex = "2";
+          //   break;
+          // case "/tag":
+          //   activeIndex = "3";
+          //   break;
+          case "/link":
+            activeIndex = "4";
+            break;
+          case "/talk":
+            activeIndex = "5";
+            break;
+          default:
+            activeIndex = "-1";
+        }
       }
       return activeIndex;
     }
@@ -146,11 +152,10 @@ export default {
   padding-left: 5px;
   color: white;
 }
-.motto-wrapper{
+.motto-wrapper {
   color: white;
   height: 50px;
   line-height: 50px;
   text-align: center;
 }
-
 </style>
