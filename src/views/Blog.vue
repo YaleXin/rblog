@@ -44,6 +44,9 @@ export default {
         case "5":
           this.$router.replace("/talk").catch(e => {});
           break;
+        case "6":
+          this.$router.replace("/search").catch(e => {});
+          break;
         default:
           this.$router.replace("/home").catch(e => {});
       }

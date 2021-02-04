@@ -43,9 +43,7 @@
           </el-form>
         </div>
       </el-menu-item>
-      <el-menu-item index="7">
-        要么改变世界，要么适应世界
-      </el-menu-item>
+      <el-menu-item index="7">要么改变世界，要么适应世界</el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -100,6 +98,9 @@ export default {
             break;
           case "/talk":
             activeIndex = "5";
+            break;
+          case "/search":
+            activeIndex = "6";
             break;
           default:
             activeIndex = "-1";

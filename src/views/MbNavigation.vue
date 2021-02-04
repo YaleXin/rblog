@@ -65,7 +65,7 @@
 
             <el-menu-item index="99">
               <div>
-                <el-form :inline="true" :model="searchForm">
+                <el-form :inline="true" :model="searchForm" @submit.native.prevent>
                   <el-input
                     placeholder="搜一搜？"
                     prefix-icon="el-icon-search"
@@ -120,6 +120,9 @@ export default {
           case "/talk":
             activeIndex = "5";
             break;
+          case "/search":
+            activeIndex = "6";
+            break;
           default:
             activeIndex = "-1";
         }
@@ -133,9 +136,9 @@ export default {
       this.$emit("mbClick", key);
     },
     onSubmit() {
-      alert("submit" + this.searchForm.content);
       this.showNvg = false;
-    }
+      this.$router.replace("/search").catch(e => {});
+    },
   }
 };
 </script>

@@ -11,6 +11,7 @@ let Tag = () => import('../views/Tag.vue')
 let Link = () => import('../views/Link.vue')
 let Talk = () => import('../views/Talk.vue')
 let Article = () => import('../views/Article.vue')
+let Search = () => import('../views/Search.vue')
 
 
 Vue.use(VueRouter)
@@ -44,6 +45,10 @@ const routes = [
     path: '/blog/:id',
     component: Article,
   },
+  {
+    path: '/search',
+    component: Search,
+  }
 ]
 
 const router = new VueRouter({
