@@ -5,6 +5,7 @@
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+Vue.use(VueRouter)
 let Home = () => import('../views/Home.vue')
 let Category = () => import('../views/Category.vue')
 let Tag = () => import('../views/Tag.vue')
@@ -12,10 +13,48 @@ let Link = () => import('../views/Link.vue')
 let Talk = () => import('../views/Talk.vue')
 let Article = () => import('../views/Article.vue')
 let Search = () => import('../views/Search.vue')
+let Admin = () => import('../views/Admin.vue')
 
+// 后台相关组件
+let AdminLogin = () => import('../views/admin/Login.vue')
+let AdminIndex = () => import('../views/admin/Index.vue')  // 展示所有博客
+let AdminBlog = () => import('../views/admin/Article.vue')  // 修改谋篇博客
+let AdminCategory = () => import('../views/admin/Category.vue')
+let AdminTag = () => import('../views/admin/Tag.vue')
+let AdminComment = () => import('../views/admin/Comment.vue')
+let AdminUser = () => import('../views/admin/User.vue')
 
-Vue.use(VueRouter)
-
+// 后台路由
+const adminRoute = [
+  {
+    path: '',
+    redirect: 'index',
+  },
+  {
+    path: 'index',
+    component: AdminIndex
+  },
+  {
+    path: 'login',
+    component: AdminLogin
+  },
+  {
+    path: 'category',
+    component: AdminCategory
+  },
+  {
+    path: 'tag',
+    component: AdminTag
+  },
+  {
+    path: 'comment',
+    component: AdminComment
+  },
+  {
+    path: 'user',
+    component: AdminUser
+  },
+];
 const routes = [
   {
     path: '',
@@ -48,7 +87,12 @@ const routes = [
   {
     path: '/search',
     component: Search,
-  }
+  },
+  {
+    path: '/admin',
+    component: Admin,
+    children: adminRoute
+  },
 ]
 
 const router = new VueRouter({
