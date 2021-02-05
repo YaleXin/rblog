@@ -91,4 +91,7 @@ export default {
   text-decoration: none;
   color: #000;
 }
+.el-tag  {
+  margin: 2px;
+}
 </style>

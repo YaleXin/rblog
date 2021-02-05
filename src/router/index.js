@@ -14,6 +14,7 @@ let Talk = () => import('../views/Talk.vue')
 let Article = () => import('../views/Article.vue')
 let Search = () => import('../views/Search.vue')
 let Admin = () => import('../views/Admin.vue')
+let Archive = () => import('../views/Archive.vue')
 
 // 后台相关组件
 let AdminLogin = () => import('../views/admin/Login.vue')
@@ -92,6 +93,11 @@ const routes = [
     path: '/admin',
     component: Admin,
     children: adminRoute
+  },
+  
+  {
+    path: '/archive',
+    component: Archive,
   },
 ]
 

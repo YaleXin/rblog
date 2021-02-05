@@ -6,6 +6,7 @@
 <template>
   <div>
     <article-card v-for="article in articleList" :key="article.id" :article="article"></article-card>
+<!-- 分页 -->
     <div style="text-align: center">
       <el-pagination
         background

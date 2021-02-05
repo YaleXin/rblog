@@ -8,7 +8,7 @@
     <el-card>
       <div class="article-title-wrapper" style="text-align: center;">
         <h1 class="article-title">
-          <a href class="article-title-link">{{article.title}}</a>
+          <a :href="'/blog/'+article.id" class="article-title-link">{{article.title}}</a>
         </h1>
         <div class="article-detail">
           <i class="fa fa-calendar"></i>

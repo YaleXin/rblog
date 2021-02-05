@@ -10,7 +10,9 @@
         v-for="(tag, index) in tagList"
         :type="activedIndex === index ? '' : 'info'"
         :key="tag.id"
-      > <a :href="'/tag/' + tag.id">{{tag.name}}</a> </el-tag>
+      >
+        <a :href="'/tag/' + tag.id">{{tag.name}}</a>
+      </el-tag>
     </el-card>
     <el-divider content-position="center">该标签下的文章</el-divider>
     <article-list :articleList="articleList"></article-list>
@@ -84,8 +86,11 @@ export default {
 </script>
 
 <style scoped>
-  .el-tag>a{
-    text-decoration:none;
-    color: #000
-  }
+.el-tag > a {
+  text-decoration: none;
+  color: #000;
+}
+.el-tag {
+  margin: 2px;
+}
 </style>

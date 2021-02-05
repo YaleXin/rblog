@@ -32,6 +32,10 @@
       </el-menu-item>
 
       <el-menu-item index="6">
+        <i class="el-icon-data-line"></i>归档
+      </el-menu-item>
+
+      <el-menu-item index="7">
         <div>
           <el-form :inline="true" :model="searchForm">
             <el-input
@@ -43,7 +47,7 @@
           </el-form>
         </div>
       </el-menu-item>
-      <el-menu-item index="7">要么改变世界，要么适应世界</el-menu-item>
+      <el-menu-item index="8">要么改变世界，要么适应世界</el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -99,8 +103,11 @@ export default {
           case "/talk":
             activeIndex = "5";
             break;
-          case "/search":
+          case "/archive":
             activeIndex = "6";
+            break;
+          case "/search":
+            activeIndex = "7";
             break;
           default:
             activeIndex = "-1";

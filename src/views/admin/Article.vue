@@ -4,16 +4,18 @@
  * @LastEditors : YaleXin
 -->
 <template>
-    <div>博客输入页面（修改或者输入）</div>
+  <div>
+    编辑页面
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'Article',
-    components: {}
-}
+  name: "Article",
+  components: {},
+  
+};
 </script>
 
 <style scoped>
-
 </style>

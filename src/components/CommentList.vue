@@ -105,14 +105,14 @@ export default {
       topCommentList: [
         {
           info: {
-            nickname: "顶层评论者",
+            nickname: "黄阿信",
             email: "495592364@qq.com",
             avatar: "",
             date: "2012 12/12/12 23:19:09",
             browser: "chrome",
             OS: "Windows"
           },
-          content: "顶层回复信息黄阿信你号",
+          content: "五块钱如何花三天？",
           id: 0,
           replyList: [
             {
@@ -124,11 +124,11 @@ export default {
                 browser: "chrome",
                 OS: "Windows"
               },
-              content: "你好啊啊啊啊啊",
+              content: "人可以不吃饭几天？",
               id: 0,
               // 回复的楼层
               replyId: 0,
-              replyNickname: "顶层评论者",
+              replyNickname: "黄阿信",
               // 顶层       虽然可以将每个回复节点的父节点设计成只有一个，
               //            但是为了方便定位和后端整理，可以设计成2个
               topCommentId: 0
@@ -142,7 +142,7 @@ export default {
                 browser: "chrome",
                 OS: "Windows"
               },
-              content: "你好啊啊啊啊啊 hello nice to meet you",
+              content: "晚上睡大街会被警察抓吗？",
               id: 1,
               // 回复的楼层
               replyId: 0,

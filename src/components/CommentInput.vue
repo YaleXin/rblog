@@ -5,7 +5,7 @@
 -->
 <template>
   <div>
-    <el-form ref="form" :model="form" :rules="rules">
+    <el-form ref="form" :model="form" :rules="rules"  :inline-message="true">
       <el-form-item prop="nickname">
         <el-input
           class="comment-form-item"

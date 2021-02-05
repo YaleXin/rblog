@@ -63,6 +63,13 @@
               </template>
             </el-menu-item>
 
+            <el-menu-item index="6">
+              <template slot="title">
+                <i class="el-icon-data-line"></i>
+                <span>归档</span>
+              </template>
+            </el-menu-item>
+            
             <el-menu-item index="99">
               <div>
                 <el-form :inline="true" :model="searchForm" @submit.native.prevent>
@@ -120,8 +127,11 @@ export default {
           case "/talk":
             activeIndex = "5";
             break;
-          case "/search":
+          case "/archive":
             activeIndex = "6";
+            break;
+          case "/search":
+            activeIndex = "7";
             break;
           default:
             activeIndex = "-1";
@@ -138,7 +148,7 @@ export default {
     onSubmit() {
       this.showNvg = false;
       this.$router.replace("/search").catch(e => {});
-    },
+    }
   }
 };
 </script>

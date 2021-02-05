@@ -5,7 +5,7 @@
 -->
 <template>
   <div>
-    <el-menu default-active="5" class="el-menu-vertical-demo" @select="handleSelect">
+    <el-menu :default-active="activeIndex" class="el-menu-vertical-demo" @select="handleSelect">
       <el-menu-item index="1">
         <i class="el-icon-document"></i>
         <span slot="title">博客</span>
@@ -69,6 +69,29 @@ export default {
         default:
           this.$router.replace("/admin/index").catch(e => {});
       }
+    }
+  },
+  computed: {
+    activeIndex() {
+      let activeIndex = "-1";
+      const routePath = this.$route.path;
+      switch (routePath) {
+        case "/admin/index":
+          activeIndex = "1";
+          break;
+        case "/admin/category":
+          activeIndex = "2";
+          break;
+        case "/admin/tag":
+          activeIndex = "3";
+          break;
+        case "/admin/comment":
+          activeIndex = "4";
+          break;
+        default:
+          activeIndex = "-1";
+      }
+      return activeIndex;
     }
   }
 };

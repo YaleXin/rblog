@@ -30,25 +30,28 @@ export default {
     navigationClick(index) {
       switch (index) {
         case "1":
-          this.$router.replace("/home").catch(e => {});
+          this.$router.push("/home").catch(e => {});
           break;
         case "2":
-          this.$router.replace("/category/-1").catch(e => {});
+          this.$router.push("/category/-1").catch(e => {});
           break;
         case "3":
-          this.$router.replace("/tag/-1").catch(e => {});
+          this.$router.push("/tag/-1").catch(e => {});
           break;
         case "4":
-          this.$router.replace("/link").catch(e => {});
+          this.$router.push("/link").catch(e => {});
           break;
         case "5":
-          this.$router.replace("/talk").catch(e => {});
+          this.$router.push("/talk").catch(e => {});
           break;
         case "6":
-          this.$router.replace("/search").catch(e => {});
+          this.$router.push("/archive").catch(e => {});
+          break;
+        case "7":
+          this.$router.push("/search").catch(e => {});
           break;
         default:
-          this.$router.replace("/home").catch(e => {});
+          this.$router.push("/home").catch(e => {});
       }
     },
     toHome() {},
