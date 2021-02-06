@@ -55,6 +55,10 @@ const adminRoute = [
     path: 'user',
     component: AdminUser
   },
+  {
+    path: 'blog/:id',
+    component: AdminBlog
+  }
 ];
 const routes = [
   {

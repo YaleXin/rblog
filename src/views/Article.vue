@@ -777,6 +777,13 @@ int main(){
         <img src="https://q.yalexin.top/17.jpg" class="ui rounded image fancy-box-img" alt />
         <img src="https://q.yalexin.top/18.jpg" class="ui rounded image fancy-box-img" alt />
       </div>
+      <el-divider></el-divider>
+      <div class="tag-group">
+        <el-tag type="info" v-for="(tag, index) in article.tags" :key="index"><i class="fa fa-tag" aria-hidden="true"></i> {{tag}}</el-tag>
+      </div>
+      <div class="appreciate-wrapper"> 
+        <appreciate></appreciate>
+      </div>
       <comment class="comment-card"></comment>
     </el-card>
   </div>
@@ -790,12 +797,14 @@ $(document).ready(function() {
     hash: false
   });
 });
+import Appreciate from '../components/Appreciate.vue'
 import Comment from "../components/Comment.vue";
 import Prism from "prismjs";
 export default {
   name: "Article",
   components: {
-    Comment
+    Comment,
+    Appreciate
   },
   activated() {
     Prism.highlightAll();
@@ -830,7 +839,8 @@ export default {
         ctgr: "分类一",
         read: 12,
         commentEnable: true,
-        content: ""
+        content: "",
+        tags: ['代码高亮', '测试', '排版', 'Fancybox', 'Vue', 'axios']
       },
       tableData: [
         {
@@ -906,5 +916,12 @@ img.rounded {
 }
 .comment-card {
   margin-top: 10px;
+}
+.el-tag  {
+  margin: 2px;
+  font-size: 0.8em;
+}
+.appreciate-wrapper{
+  text-align: center
 }
 </style>
