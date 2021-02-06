@@ -1,8 +1,3 @@
-<!--
- * @Author      : YaleXin
- * @Email       : me@yalexin.top
- * @LastEditors : YaleXin
--->
 <template>
   <div id="app">
     <blog></blog>
