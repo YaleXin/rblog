@@ -7,8 +7,8 @@
   <div>
     <el-popover placement="bottom" width="310" trigger="click">
       <div class="img-wrapper">
-        <img class="qr-code-img" src="https://blog.yalexin.top/images/Alipay-square.jpg" />
-        <img class="qr-code-img" src="https://blog.yalexin.top/images/WeChat-square.png" />
+        <img class="qr-code-img" src="../assets/img/Alipay-square.jpg" />
+        <img class="qr-code-img" src="../assets/img/WeChat-square.png" />
       </div>
       <el-button slot="reference" plain="" size="medium" type="danger" class="appreciate-btn">赞赏</el-button>
     </el-popover>
