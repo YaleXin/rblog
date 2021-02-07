@@ -30,4 +30,7 @@ module.exports = {
         },
         disableHostCheck: true,
     },
+    assetsDir: 'static',
+    parallel: false,
+    publicPath: './',
 }
