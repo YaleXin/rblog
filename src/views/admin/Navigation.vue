@@ -51,7 +51,7 @@ export default {
     changeAdminRoute(index) {
       switch (index) {
         case "1":
-          this.$router.replace("/admin/index").catch(e => {});
+          this.$router.replace("/admin/blog").catch(e => {});
           break;
         case "2":
           this.$router.replace("/admin/category").catch(e => {});
@@ -76,7 +76,7 @@ export default {
       let activeIndex = "-1";
       const routePath = this.$route.path;
       switch (routePath) {
-        case "/admin/index":
+        case "/admin/blog":
           activeIndex = "1";
           break;
         case "/admin/category":

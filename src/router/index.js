@@ -18,7 +18,8 @@ let Archive = () => import('../views/Archive.vue')
 
 // 后台相关组件
 let AdminLogin = () => import('../views/admin/Login.vue')
-let AdminIndex = () => import('../views/admin/Index.vue')  // 展示所有博客
+let AdminIndex = () => import('../views/admin/Index.vue')
+let AdminBlogList = () => import('../views/admin/BlogList.vue')  // 展示所有博客
 let AdminBlog = () => import('../views/admin/Article.vue')  // 修改谋篇博客
 let AdminCategory = () => import('../views/admin/Category.vue')
 let AdminTag = () => import('../views/admin/Tag.vue')
@@ -34,6 +35,10 @@ const adminRoute = [
   {
     path: 'index',
     component: AdminIndex
+  },
+  {
+    path: 'blog',
+    component: AdminBlogList
   },
   {
     path: 'login',
@@ -98,7 +103,7 @@ const routes = [
     component: Admin,
     children: adminRoute
   },
-  
+
   {
     path: '/archive',
     component: Archive,
