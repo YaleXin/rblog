@@ -9,21 +9,26 @@
       <el-form-item prop="name" label="标题">
         <el-input class="blog-name-input" v-model="blog.name" placeholder="请输入文章标题"></el-input>
       </el-form-item>
-      <el-form-item prop="category" label="分类">
-        <el-select filterable allow-create v-model="blog.category" placeholder="请选择文章类别">
-          <el-option v-for="ctgr in categoryList" :key="ctgr.id" :label="ctgr.name" :value="ctgr"></el-option>
+      <el-form-item prop="categoryInput" label="分类">
+        <el-select filterable allow-create v-model="blog.categoryInput" placeholder="请选择文章类别">
+          <el-option
+            v-for="(ctgr, index) in categoryList"
+            :key="ctgr.id"
+            :label="ctgr.name"
+            :value="index"
+          ></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="标签">
         <el-select
-          v-model="blog.tag"
+          v-model="blog.tagsInput"
           multiple
           filterable
           allow-create
           default-first-option
           placeholder="请选择文章标签"
         >
-          <el-option v-for="tag in tagList" :key="tag.id" :label="tag.name" :value="tag.id"></el-option>
+          <el-option v-for="(tag, index) in tagList" :key="tag.id" :label="tag.name" :value="index"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="创建时间" required>
@@ -38,7 +43,7 @@
           </el-form-item>
         </el-col>
       </el-form-item>
-      <el-form-item prop="category" label="文章描述">
+      <el-form-item prop="description" label="文章描述">
         <el-input
           :autosize="{ minRows: 5, maxRows: 10}"
           type="textarea"
@@ -54,7 +59,9 @@
 </template>
 
 <script>
+import innerHttp from "../../network/innerHttp.js";
 import Markdown from "vue-meditor";
+
 export default {
   name: "Article",
   components: {
@@ -65,11 +72,14 @@ export default {
       blog: {
         name: "",
         content: "",
-        tag: [],
+        tagsInput: [],
+        tags: [],
         time: "",
         description: "",
-        category: "",
-        date: ""
+        categoryInput: "",
+        category: [],
+        date: "",
+        createTime: ""
       },
       tagList: [
         { id: 0, name: "暴力法" },
@@ -93,7 +103,7 @@ export default {
           message: "请输入文章标题名称",
           trigger: "blur"
         },
-        category: {
+        categoryInput: {
           required: true,
           message: "请输入文章分类",
           trigger: "blur"
@@ -108,19 +118,20 @@ export default {
           message: "请输入创建文章的时间",
           trigger: "blur"
         },
-        category: { required: true, message: "请输入文章描述", trigger: "blur" }
+        description: {
+          required: true,
+          message: "请输入文章描述",
+          trigger: "blur"
+        }
       }
     };
   },
   methods: {
-    clg() {
-      console.log(this.blog.content);
-    },
     submit() {
       this.$refs.blogForm.validate(valid => {
         if (valid) {
-          console.log(this.blog);
-          alert("submit!");
+          this.parseForm();
+          this.addBlog();
         } else {
           this.$alert("请输入必填项", "发布失败", {
             confirmButtonText: "确定",
@@ -129,7 +140,86 @@ export default {
           return false;
         }
       });
+    },
+    addBlog() {
+      innerHttp
+        .put("/admin/blog/add", {
+          data: JSON.stringify(this.blog)
+        })
+        .then(res => {
+          if (res.status === 200) {
+            this.addBlogSuccess();
+          }
+        })
+        .catch(e => {});
+    },
+    addBlogSuccess() {
+      this.$message({
+        showClose: true,
+        message: "添加成功！",
+        type: "success"
+      });
+      this.$router.replace("/admin/index").catch(e => {});
+    },
+    parseForm() {
+      const index = this.blog.categoryInput;
+      if (typeof index !== "number") {
+        this.blog.category = {
+          id: -1,
+          name: index
+        };
+      } else {
+        this.blog.category = this.categoryList[index];
+      }
+      this.blog.tags = [];
+      let tags = this.blog.tags;
+      for (let i = 0; i < this.blog.tagsInput.length; i++) {
+        if (typeof this.blog.tagsInput[i] !== "number") {
+          tags.push({
+            id: -1,
+            name: this.blog.tagsInput[i]
+          });
+        } else {
+          tags.push(this.tagList[this.blog.tagsInput[i]]);
+        }
+      }
+      // 将输入的日期和时间进行拼装
+      let g = new Date();
+      let time =
+        this.blog.date.getFullYear() +
+        "-" +
+        (this.blog.date.getMonth() + 1) +
+        "-" +
+        this.blog.date.getDate() +
+        " " +
+        this.blog.time.getHours() +
+        ":" +
+        this.blog.time.getMinutes() +
+        ":" +
+        this.blog.time.getSeconds();
+      this.blog.createTime = new Date(time);
+      delete this.blog.tagsInput;
+      delete this.blog.categoryInput;
     }
+  },
+  activated() {
+    this.blog.name = "";
+    this.blog.categoryInput = {};
+    this.blog.tagsInput = [];
+    this.blog.content = "";
+    this.blog.description = "";
+    innerHttp
+      .get("/tag/all")
+      .then(res => {
+        this.tagList = res.data.tags;
+      })
+      .catch(e => {});
+    innerHttp
+      .get("/category/all")
+      .then(res => {
+        this.categoryList = res.data.categories;
+      })
+      .catch(e => {});
   }
 };
 </script>

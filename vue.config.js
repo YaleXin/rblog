@@ -11,12 +11,12 @@ module.exports = {
     devServer: {
         port: 8081,
         proxy: {
-            '/api': {
-                target: 'http://localhost:8080/testJson4servlet/',
+            '/api_serv': {
+                target: 'http://localhost:8080/api/',
                 ws: false,
                 changeOrigin: true,
                 pathRewrite: {
-                    '^/api': '',
+                    '^/api_serv': '',
                 }
             },
             '/jinri': {
@@ -30,7 +30,7 @@ module.exports = {
         },
         disableHostCheck: true,
     },
-    assetsDir: 'static',
-    parallel: false,
-    publicPath: './',
+    // assetsDir: 'static',
+    // parallel: false,
+    // publicPath: './',
 }
