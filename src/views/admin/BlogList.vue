@@ -13,7 +13,7 @@
       <el-table-column align="center" prop="date" label="日期"></el-table-column>
       <el-table-column align="center" prop="category" label="类别"></el-table-column>
       <el-table-column align="center" prop="tags" label="标签">
-        <template slot-scope="scope" >
+        <template slot-scope="scope">
           <el-tag
             v-for="(tag, index) in scope.row.tags"
             :key="index"
@@ -32,17 +32,20 @@
     <div style="text-align: center">
       <el-pagination
         background
+        :current-page="page.pageNum"
         :pager-count="5"
+        @current-change="currentChange"
         :hide-on-single-page="true"
         layout="prev, pager, next"
-        :total="1000"
-        :page-size="20"
+        :total="page.totalSize"
+        :page-size="page.pageSize"
       ></el-pagination>
     </div>
   </div>
 </template>
 
 <script>
+import innerHttp from "../../network/innerHttp.js";
 export default {
   name: "BlogList",
   components: {},
@@ -91,7 +94,33 @@ export default {
           category: "算法",
           tags: ["位运算", "移位"]
         }
-      ]
+      ],
+      page: {
+        pageNum: 1,
+        pageSize: 5,
+        totalSize: 10,
+        totalPages: 0,
+        content: [
+          {
+            id: 1,
+            name: "",
+            content: "",
+            description: "",
+            createTime: "",
+            updateTime: "",
+            category: {
+              id: 1,
+              name: ""
+            },
+            tags: [
+              {
+                id: 1,
+                name: ""
+              }
+            ]
+          }
+        ]
+      }
     };
   },
   methods: {
@@ -116,6 +145,25 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+    currentChange(newIndex) {
+      console.log(newIndex);
+      this.page.pageNum = newIndex;
+      console.log(this.page);
+      innerHttp
+        .get("/blog/blogPage", {
+          params: {
+            pageNum: this.page.pageNum,
+            pageSize: this.page.pageSize
+          }
+        })
+        .then(res => {
+          console.log(res);
+          this.page = res.data.page;
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   }
 };
@@ -125,7 +173,7 @@ export default {
 .el-pagination {
   margin-top: 20px;
 }
-.el-tag{
+.el-tag {
   margin-left: 5px;
 }
 </style>

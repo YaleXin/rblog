@@ -204,7 +204,7 @@ export default {
   },
   activated() {
     this.blog.name = "";
-    this.blog.categoryInput = {};
+    this.blog.categoryInput = "";
     this.blog.tagsInput = [];
     this.blog.content = "";
     this.blog.description = "";
