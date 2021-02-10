@@ -9,26 +9,28 @@
       <el-form-item prop="name" label="标题">
         <el-input class="blog-name-input" v-model="blog.name" placeholder="请输入文章标题"></el-input>
       </el-form-item>
-      <el-form-item prop="categoryInput" label="分类">
-        <el-select filterable allow-create v-model="blog.categoryInput" placeholder="请选择文章类别">
-          <el-option
-            v-for="(ctgr, index) in categoryList"
-            :key="ctgr.id"
-            :label="ctgr.name"
-            :value="index"
-          ></el-option>
+      <el-form-item prop="category" label="分类">
+        <el-select
+          value-key="id"
+          filterable
+          allow-create
+          v-model="blog.category"
+          placeholder="请选择文章类别"
+        >
+          <el-option v-for="ctgr in categoryList" :key="ctgr.id" :label="ctgr.name" :value="ctgr"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="标签">
         <el-select
-          v-model="blog.tagsInput"
+          value-key="id"
+          v-model="blog.tags"
           multiple
           filterable
           allow-create
           default-first-option
           placeholder="请选择文章标签"
         >
-          <el-option v-for="(tag, index) in tagList" :key="tag.id" :label="tag.name" :value="index"></el-option>
+          <el-option v-for="tag in tagList" :key="tag.id" :label="tag.name" :value="tag"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="创建时间" required>
@@ -72,11 +74,9 @@ export default {
       blog: {
         name: "",
         content: "",
-        tagsInput: [],
         tags: [],
         time: "",
         description: "",
-        categoryInput: "",
         category: [],
         date: "",
         createTime: ""
@@ -103,7 +103,7 @@ export default {
           message: "请输入文章标题名称",
           trigger: "blur"
         },
-        categoryInput: {
+        category: {
           required: true,
           message: "请输入文章分类",
           trigger: "blur"
@@ -130,7 +130,9 @@ export default {
     submit() {
       this.$refs.blogForm.validate(valid => {
         if (valid) {
+
           this.parseForm();
+          console.log(this.blog);
           this.addBlog();
         } else {
           this.$alert("请输入必填项", "发布失败", {
@@ -162,25 +164,20 @@ export default {
       this.$router.replace("/admin/index").catch(e => {});
     },
     parseForm() {
-      const index = this.blog.categoryInput;
-      if (typeof index !== "number") {
+      const category = this.blog.category;
+      if (category.id === undefined) {
         this.blog.category = {
           id: -1,
-          name: index
+          name: category
         };
-      } else {
-        this.blog.category = this.categoryList[index];
       }
-      this.blog.tags = [];
-      let tags = this.blog.tags;
-      for (let i = 0; i < this.blog.tagsInput.length; i++) {
-        if (typeof this.blog.tagsInput[i] !== "number") {
-          tags.push({
+      for (let i = 0; i < this.blog.tags.length; i++) {
+        if(this.blog.tags[i].id === undefined){
+          let tagName = this.blog.tags[i];
+          this.blog.tags[i] = {
             id: -1,
-            name: this.blog.tagsInput[i]
-          });
-        } else {
-          tags.push(this.tagList[this.blog.tagsInput[i]]);
+            name: tagName
+          }
         }
       }
       // 将输入的日期和时间进行拼装
@@ -198,16 +195,32 @@ export default {
         ":" +
         this.blog.time.getSeconds();
       this.blog.createTime = new Date(time);
-      delete this.blog.tagsInput;
-      delete this.blog.categoryInput;
+    },
+    loadBlogById(id){
+      innerHttp.get('/blog/' + id).then(res => {
+        this.parseData2Form(res.data);
+     }).catch(e => {
+
+      });
+    },
+    parseData2Form(rawBlog){
+      let createTimeStr = rawBlog.createTime.split('T')[0] + ' ' + rawBlog.createTime.split('T')[1].split('.')[0]
+      rawBlog.createTime = new Date(createTimeStr);
+      rawBlog.date = rawBlog.createTime;
+      rawBlog.time = rawBlog.createTime;
+      this.blog = rawBlog;
     }
   },
   activated() {
-    this.blog.name = "";
-    this.blog.categoryInput = "";
-    this.blog.tagsInput = [];
-    this.blog.content = "";
-    this.blog.description = "";
+    let id = this.$route.params.id;
+    if (id !== "-1") {
+      this.loadBlogById(id);
+    } else {
+      this.blog.name = "";
+      
+      this.blog.content = "";
+      this.blog.description = "";
+    }
     innerHttp
       .get("/tag/all")
       .then(res => {

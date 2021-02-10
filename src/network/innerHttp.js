@@ -33,6 +33,11 @@ innerHttp.interceptors.response.use(
 				message: '发送数据错误',
 				type: "error"
 			});
+			case 500: Message({
+				showClose: true,
+				message: '后端出错',
+				type: "error"
+			});
 		}
 		return error
 	})

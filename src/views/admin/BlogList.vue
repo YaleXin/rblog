@@ -6,12 +6,25 @@
 <template>
   <div>
     <div>
-      <el-button @click="addBlogClick(-1)" type="primary" style="margin-bottom: 10px;" plain>添加新文章</el-button>
+      <el-button @click="editBlogClick(-1)" type="primary" style="margin-bottom: 10px;" plain>添加新文章</el-button>
     </div>
-    <el-table :data="blogList" border style="width: 100%" stripe :fit="true">
-      <el-table-column align="center" prop="title" label="文章"></el-table-column>
-      <el-table-column align="center" prop="date" label="日期"></el-table-column>
-      <el-table-column align="center" prop="category" label="类别"></el-table-column>
+    <el-table :data="page.content" border style="width: 100%" stripe :fit="true">
+      <el-table-column align="center" prop="name" label="文章"></el-table-column>
+      <el-table-column align="center" label="最后更新日期">
+        <template slot-scope="scope">
+          <span
+            style="margin-left: 10px"
+          >{{ scope.row.updateTime.split('T')[0] }} {{scope.row.updateTime.split('T')[1].split('.')[0]}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="创建时间日期">
+        <template slot-scope="scope">
+          <span
+            style="margin-left: 10px"
+          >{{ scope.row.createTime.split('T')[0] }} {{scope.row.createTime.split('T')[1].split('.')[0]}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" prop="category.name" label="类别"></el-table-column>
       <el-table-column align="center" prop="tags" label="标签">
         <template slot-scope="scope">
           <el-tag
@@ -19,12 +32,12 @@
             :key="index"
             :type="index % 2 === 0 ? 'primary' : 'success'"
             disable-transitions
-          >{{tag}}</el-tag>
+          >{{tag.name}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column align="center" fixed="right" label="操作">
         <template slot-scope="scope">
-          <el-button @click="addBlogClick(scope.row.id)" type="primary" size="small">编辑</el-button>
+          <el-button @click="editBlogClick(scope.row.id)" type="primary" size="small">编辑</el-button>
           <el-button @click="deleteBlogClick(scope.row.id)" type="danger" size="small">删除</el-button>
         </template>
       </el-table-column>
@@ -49,52 +62,11 @@ import innerHttp from "../../network/innerHttp.js";
 export default {
   name: "BlogList",
   components: {},
+  created() {
+    this.currentChange(1);
+  },
   data() {
     return {
-      blogList: [
-        {
-          id: 1,
-          title: "Java中给静态方法添加synchronized时候的锁",
-          date: "2020/12/31 12:22:34",
-          category: "Java",
-          tags: ["多线程", "锁"]
-        },
-        {
-          id: 2,
-          title: "几种求质数的方法",
-          date: "2020/2/1 12:22:34",
-          category: "算法",
-          tags: ["数论", "筛选法", "暴力法"]
-        },
-        {
-          id: 3,
-          title: "将int类型整数向上取2次幂",
-          date: "2020/7/31 12:22:34",
-          category: "算法",
-          tags: ["位运算", "移位"]
-        },
-        {
-          id: 4,
-          title: "Java中给静态方法添加synchronized时候的锁",
-          date: "2020/12/31 12:22:34",
-          category: "Java",
-          tags: ["多线程", "锁"]
-        },
-        {
-          id: 5,
-          title: "几种求质数的方法",
-          date: "2020/2/1 12:22:34",
-          category: "算法",
-          tags: ["数论", "筛选法", "暴力法"]
-        },
-        {
-          id: 6,
-          title: "将int类型整数向上取2次幂",
-          date: "2020/7/31 12:22:34",
-          category: "算法",
-          tags: ["位运算", "移位"]
-        }
-      ],
       page: {
         pageNum: 1,
         pageSize: 5,
@@ -106,8 +78,8 @@ export default {
             name: "",
             content: "",
             description: "",
-            createTime: "",
-            updateTime: "",
+            createTime: "2021-02-09T08:57:19.000+00:00",
+            updateTime: "2021-02-09T08:57:19.000+00:00",
             category: {
               id: 1,
               name: ""
@@ -124,7 +96,7 @@ export default {
     };
   },
   methods: {
-    addBlogClick(id) {
+    editBlogClick(id) {
       this.$router.push("/admin/blog/" + id).catch(e => {});
     },
     deleteBlogClick(id) {
@@ -146,8 +118,8 @@ export default {
           });
         });
     },
+
     currentChange(newIndex) {
-      console.log(newIndex);
       this.page.pageNum = newIndex;
       console.log(this.page);
       innerHttp
