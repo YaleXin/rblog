@@ -130,10 +130,13 @@ export default {
     submit() {
       this.$refs.blogForm.validate(valid => {
         if (valid) {
-
           this.parseForm();
-          console.log(this.blog);
-          this.addBlog();
+          const blogId = this.$route.params.id;
+          if (blogId !== "-1") {
+            this.updateBlog();
+          } else {
+            this.addBlog();
+          }
         } else {
           this.$alert("请输入必填项", "发布失败", {
             confirmButtonText: "确定",
@@ -150,15 +153,33 @@ export default {
         })
         .then(res => {
           if (res.status === 200) {
-            this.addBlogSuccess();
+            this.handleBlogSuccess("添加成功");
           }
         })
         .catch(e => {});
     },
-    addBlogSuccess() {
+    updateBlog() {
+      innerHttp
+        .put("/admin/blog/modify", {
+          data: JSON.stringify(this.blog)
+        })
+        .then(res => {
+          if (res.status === 200) {
+            this.handleBlogSuccess("更新成功");
+          }else{
+            this.$message({
+              showClose: true,
+              message: "更新失败",
+              type: 'error'
+            })
+          }
+        })
+        .catch(e => {});
+    },
+    handleBlogSuccess(msg) {
       this.$message({
         showClose: true,
-        message: "添加成功！",
+        message: msg,
         type: "success"
       });
       this.$router.replace("/admin/index").catch(e => {});
@@ -172,12 +193,12 @@ export default {
         };
       }
       for (let i = 0; i < this.blog.tags.length; i++) {
-        if(this.blog.tags[i].id === undefined){
+        if (this.blog.tags[i].id === undefined) {
           let tagName = this.blog.tags[i];
           this.blog.tags[i] = {
             id: -1,
             name: tagName
-          }
+          };
         }
       }
       // 将输入的日期和时间进行拼装
@@ -195,16 +216,22 @@ export default {
         ":" +
         this.blog.time.getSeconds();
       this.blog.createTime = new Date(time);
+      console.log('this.blog.createTime -- >');
+      console.log(this.blog.createTime);
     },
-    loadBlogById(id){
-      innerHttp.get('/blog/' + id).then(res => {
-        this.parseData2Form(res.data);
-     }).catch(e => {
-
-      });
+    loadBlogById(id) {
+      innerHttp
+        .get("/blog/" + id)
+        .then(res => {
+          this.parseData2Form(res.data);
+        })
+        .catch(e => {});
     },
-    parseData2Form(rawBlog){
-      let createTimeStr = rawBlog.createTime.split('T')[0] + ' ' + rawBlog.createTime.split('T')[1].split('.')[0]
+    parseData2Form(rawBlog) {
+      let createTimeStr =
+        rawBlog.createTime.split("T")[0] +
+        " " +
+        rawBlog.createTime.split("T")[1].split(".")[0];
       rawBlog.createTime = new Date(createTimeStr);
       rawBlog.date = rawBlog.createTime;
       rawBlog.time = rawBlog.createTime;
@@ -217,8 +244,11 @@ export default {
       this.loadBlogById(id);
     } else {
       this.blog.name = "";
-      
+      this.blog.category = {};
+      this.blog.tags = [];
       this.blog.content = "";
+      this.blog.time = "";
+      this.blog.date = "";
       this.blog.description = "";
     }
     innerHttp

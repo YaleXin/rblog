@@ -62,8 +62,8 @@ import innerHttp from "../../network/innerHttp.js";
 export default {
   name: "BlogList",
   components: {},
-  created() {
-    this.currentChange(1);
+  activated() {
+    this.currentChange(this.page.pageNum);
   },
   data() {
     return {
@@ -99,20 +99,42 @@ export default {
     editBlogClick(id) {
       this.$router.push("/admin/blog/" + id).catch(e => {});
     },
-    deleteBlogClick(id) {
-      this.$confirm("此操作将永久删除该博客: " + id + ", 是否继续?", "提示", {
+    delBlogSuccess() {
+      this.$message({
+        showClose: true,
+        type: "success",
+        message: "删除成功!"
+      });
+      this.currentChange(this.page.pageNum);
+    },
+    delBlogFail() {
+      this.$message({
+        showClose: true,
+        type: "error",
+        message: "删除失败!"
+      });
+    },
+    deleteBlogClick(blogId) {
+      this.$confirm("此操作将永久删除该博客, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          });
+          innerHttp
+            .delete("/admin/blog/delete/" + blogId)
+            .then(res => {
+              if (res.data.result > 0) {
+                this.delBlogSuccess();
+              } else {
+                this.delBlogFail();
+              }
+            })
+            .catch(e => {});
         })
         .catch(() => {
           this.$message({
+            showClose: true,
             type: "info",
             message: "已取消删除"
           });
@@ -121,7 +143,7 @@ export default {
 
     currentChange(newIndex) {
       this.page.pageNum = newIndex;
-      console.log(this.page);
+
       innerHttp
         .get("/blog/blogPage", {
           params: {
@@ -130,7 +152,6 @@ export default {
           }
         })
         .then(res => {
-          console.log(res);
           this.page = res.data.page;
         })
         .catch(e => {
