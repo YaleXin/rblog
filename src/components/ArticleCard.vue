@@ -8,21 +8,21 @@
     <el-card>
       <div class="article-title-wrapper" style="text-align: center;">
         <h1 class="article-title">
-          <a :href="'/blog/'+article.id" class="article-title-link">{{article.title}}</a>
+          <a :href="'/blog/'+article.id" class="article-title-link">{{article.name}}</a>
         </h1>
         <div class="article-detail">
           <i class="fa fa-calendar"></i>
-          <span>{{article.date}}</span>
+          <span style="margin-left:2px;">{{article.createTime.split('T')[0]}}</span>
           <el-divider direction="vertical"></el-divider>
           <i class="fa fa-eye"></i>
-          <span>{{article.read}}</span>
+          <span style="margin-left:2px;">{{article.views}}</span>
           <el-divider direction="vertical"></el-divider>
           <i class="fa fa-bookmark-o"></i>
-          <span>{{article.ctgr}}</span>
+          <span style="margin-left:2px;">{{article.category.name}}</span>
         </div>
       </div>
       <div class="article-dscr">
-        <p>{{article.dscr}}</p>
+        <p>{{article.description}} ...</p>
       </div>
       <div class="readMore">
         <a :href="'/blog/'+article.id" class="readMore-btn">阅读全文 »</a>
@@ -41,11 +41,14 @@ export default {
       default: () => {
         return {
           id: 0,
-          title: "题目",
-          dscr: "描述",
-          date: "2020-2-3",
-          read: 12,
-          ctgr: "分类"
+          name: "题目",
+          description: "描述",
+          createTime: "2021-02-09T08:57:19.000+00:00",
+          views: 12,
+          category: {
+            name: "分类",
+            id: 1
+          }
         };
       }
     }
@@ -109,7 +112,7 @@ a:focus {
   transition-timing-function: ease-in-out;
   font-size: 0.875em;
 }
-.readMore-btn:hover{
+.readMore-btn:hover {
   background: rgb(22, 22, 22);
   color: #fff;
 }

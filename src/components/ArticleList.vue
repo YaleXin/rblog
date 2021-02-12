@@ -6,18 +6,6 @@
 <template>
   <div>
     <article-card v-for="article in articleList" :key="article.id" :article="article"></article-card>
-<!-- 分页 -->
-    <div style="text-align: center">
-      <el-pagination
-        background
-        :pager-count="5"
-        :hide-on-single-page="true"
-        @current-change="currentChange"
-        layout="prev, pager, next"
-        :total="1000"
-        :page-size="20"
-      ></el-pagination>
-    </div>
   </div>
 </template>
 
@@ -32,21 +20,16 @@ export default {
     articleList: {
       type: Array,
       default: () => {
-        return [{ id: 0, title: "题目", dscr: "描述" }];
+        return [{ id: 0, name: "题目", description: "描述" }];
       }
     }
   },
   methods: {
-    currentChange(newPageIndex) {
-      // console.log(newPageIndex);
-    }
+    
   }
 };
 </script>
 <style scoped>
-.el-pagination {
-  margin-top: 20px;
-  
-}
+
 
 </style>
