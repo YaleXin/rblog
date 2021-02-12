@@ -26,18 +26,26 @@ innerHttp.interceptors.response.use(
 	//接口错误状态处理，也就是说无响应时的处理
 	error => {
 		let msg = error.response
-
-		switch (msg.status) {
-			case 400: Message({
+		if (msg.status === undefined) {
+			Message({
 				showClose: true,
-				message: '发送数据错误',
+				message: '后端未部署',
 				type: "error"
 			});
-			case 500: Message({
-				showClose: true,
-				message: '后端出错',
-				type: "error"
-			});
+		} else {
+			switch (msg.status) {
+				case 400: Message({
+					showClose: true,
+					message: '发送数据错误',
+					type: "error"
+				});
+					break;
+				case 500: Message({
+					showClose: true,
+					message: '后端出错',
+					type: "error"
+				}); break;
+			}
 		}
 		return error
 	})

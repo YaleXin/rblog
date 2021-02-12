@@ -221,7 +221,7 @@ export default {
     },
     loadBlogById(id) {
       innerHttp
-        .get("/blog/" + id)
+        .get("/admin/blog/" + id)
         .then(res => {
           this.parseData2Form(res.data);
         })
