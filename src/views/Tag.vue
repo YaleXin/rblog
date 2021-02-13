@@ -12,7 +12,7 @@
         :key="tag.id"
       >
         <a :href="'/tag/' + tag.id">
-          <i class="fa fa-bookmark-o" aria-hidden="true"></i>
+          <i class="fa fa-tag" aria-hidden="true"></i>
           <span>{{tag.name}}</span>
         </a>
       </el-tag>

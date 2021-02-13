@@ -10,7 +10,9 @@
         <h1 class="article-title">{{article.name}}</h1>
         <div class="article-detail">
           <i class="fa fa-calendar"></i>
-          <span style="margin-left:2px; font-size: 14px;">{{article.createTime.split('T')[0]}} {{article.createTime.split('T')[1].split('.')[0]}}</span>
+          <span
+            style="margin-left:2px; font-size: 14px;"
+          >{{article.createTime.split('T')[0]}} {{article.createTime.split('T')[1].split('.')[0]}}</span>
           <el-divider direction="vertical"></el-divider>
           <i class="fa fa-eye"></i>
           <span style="margin-left:2px; font-size: 14px;">{{article.views}}</span>
@@ -162,6 +164,19 @@ export default {
 .article-content >>> img.rounded {
   border-radius: 10px;
 }
+.article-content >>> ul {
+  margin-left: 0;
+  padding: 5px
+}
+
+.article-content >>> ol {
+  margin-left: 0;
+  padding: 8px
+}
+.article-content >>> li {
+  margin-left: 0;
+}
+
 .comment-card {
   margin-top: 10px;
 }
