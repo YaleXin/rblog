@@ -7,16 +7,16 @@
   <div>
     <div v-for="(list, index) in blogList" :key="index">
       <el-divider content-position="center">
-        <span style="color: #35b8ff;font-size:2em;">{{list.year}}</span>
+        <span style="color: #35b8ff;font-size:2em;">{{list.yearMonth.toString().substring(0, 4)}}-{{list.yearMonth.toString().substring(4, 6)}}</span>
       </el-divider>
       <el-card>
         <el-timeline>
           <el-timeline-item class="my-timeline-item"
-            v-for="(blog, index1) in list.blogListByYear"
+            v-for="(blog, index1) in list.content"
             :key="index1"
-            :timestamp="blog.date"
+            :timestamp="blog.createTime.split('T')[0] +' '+ blog.createTime.split('T')[1].split('.')[0]"
           >
-            <a :href="'/blog/' + blog.id" class="article-title-link">{{blog.blog}}</a>
+            <a target="_blank" :href="'/blog/' + blog.id" class="article-title-link">{{blog.name}}</a>
           </el-timeline-item>
         </el-timeline>
       </el-card>
@@ -25,36 +25,26 @@
 </template>
 
 <script>
+import innerHttp from "../network/innerHttp.js";
 export default {
   name: "Archive",
   components: {},
+  created(){
+    innerHttp.get('/archive').then(res =>{
+      console.log(res.data.blogs[0]);
+      this.blogList = res.data.blogs;
+    }).catch(e => {})
+  },
   data() {
     return {
       blogList: [
         {
-          year: "2020",
-          blogListByYear: [
-            { id: 0, blog: "五块钱如何花三天", date: "07/12" },
-            { id: 1,blog: "如何让富婆爱上你", date: "07/11" },
-            { id: 2,blog: "全国富婆通讯录", date: "07/10" }
+          yearMonth: "",
+          content: [
+            { id: 0, name: "", createTime: "2021-02-13T09:30:29.000+08:00" },
           ]
         },
-        {
-          year: "2019",
-          blogListByYear: [
-            { id: 3,blog: "五块钱如何花三天", date: "07/12" },
-            { id: 4,blog: "如何让富婆爱上你", date: "07/11" },
-            { id: 5,blog: "全国富婆通讯录", date: "07/10" }
-          ]
-        },
-        {
-          year: "2018",
-          blogListByYear: [
-            { id: 6,blog: "五块钱如何花三天", date: "07/12" },
-            { id: 7,blog: "如何让富婆爱上你", date: "07/11" },
-            { id: 8,blog: "全国富婆通讯录", date: "07/10" }
-          ]
-        }
+        
       ]
     };
   }

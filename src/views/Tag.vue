@@ -7,19 +7,36 @@
   <div>
     <el-card>
       <el-tag
-        v-for="(tag, index) in tagList"
-        :type="activedIndex === index ? '' : 'info'"
+        v-for="tag in tagList"
+        :type="activedId === tag.id ? '' : 'info'"
         :key="tag.id"
       >
-        <a :href="'/tag/' + tag.id">{{tag.name}}</a>
+        <a :href="'/tag/' + tag.id">
+          <i class="fa fa-bookmark-o" aria-hidden="true"></i>
+          <span>{{tag.name}}</span>
+        </a>
       </el-tag>
     </el-card>
     <el-divider content-position="center">该标签下的文章</el-divider>
-    <article-list :articleList="articleList"></article-list>
+    <article-list :articleList="page.content"></article-list>
+    <!-- 分页 -->
+    <div style="text-align: center">
+      <el-pagination
+        background
+        :current-page="page.pageNum"
+        :pager-count="5"
+        @current-change="currentChange"
+        :hide-on-single-page="true"
+        layout="prev, pager, next"
+        :total="page.totalSize"
+        :page-size="page.pageSize"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
+import innerHttp from "../network/innerHttp.js";
 import ArticleList from "../components/ArticleList.vue";
 export default {
   name: "Tag",
@@ -28,58 +45,89 @@ export default {
   },
   data() {
     return {
-      articleList: [
-        {
-          id: 0,
-          title: "标签 题目1",
-          dscr:
-            "有一个需求，前端通过axios发送用户名和密码到后台，后台查询数据库后，确认合法用户后直接把信息存进session里边，而为了实现这个 需求，就需要前端解决跨域，并且将cookie存到本地计算机中。",
-          date: "2020-2-3",
-          read: 12,
-          tag: "分类"
-        },
-        {
-          id: 1,
-          title: "标签 使用axios+tomcat HttpServlet处理跨域请求以及处理cookie",
-          dscr: "描述2"
-        },
-        { id: 2, title: "标签 题目3", dscr: "描述3" },
-        { id: 3, title: "标签 题目4", dscr: "描述4" },
-        { id: 4, title: "标签 题目5", dscr: "描述5" }
-      ],
-      tagList: [
-        { id: 110, name: "标签一" },
-        { id: 111, name: "标签二" },
-        { id: 122, name: "标签三" },
-        { id: 133, name: "标签三" },
-        { id: 144, name: "标签三" },
-        { id: 155, name: "标签三" },
-        { id: 166, name: "标签三" },
-        { id: 177, name: "标签三" }
-      ],
-      activedIndex: -1,
-      activedCategoryExist: false
+      
+      tagList: [],
+      page: {
+        pageNum: 1,
+        pageSize: 5,
+        totalSize: 10,
+        totalPages: 0,
+        content: [
+          {
+            id: 1,
+            name: "",
+            content: "",
+            description: "",
+            createTime: "2021-02-09T08:57:19.000+00:00",
+            updateTime: "2021-02-09T08:57:19.000+00:00",
+            category: {
+              id: 1,
+              name: ""
+            },
+            tags: [
+              {
+                id: 1,
+                name: ""
+              }
+            ]
+          }
+        ]
+      },
+      activedId: -1,
+      activedTagExist: false
     };
   },
-  activated() {
-    const routePath = this.$route.path;
-    let id = parseInt(routePath.slice(5, routePath.length));
-    if (id === -1) {
-      // 默认显示第一条
-      this.activedIndex = 0;
-      this.activedCategoryExist = true;
-    } else if (id !== NaN) {
-      for (let index = 0; index < this.tagList.length; index++) {
-        if (id === this.tagList[index].id) {
-          this.activedIndex = index;
-          this.activedCategoryExist = true;
-          break;
+  created() {
+    innerHttp
+      .get("/tag/all")
+      .then(res => {
+        this.tagList = res.data.tags;
+        this.setActivedId();
+        this.currentChange(this.page.pageNum);
+      })
+      .catch(e => {});
+  },
+  activated() {},
+  computed: {},
+  methods: {
+    setActivedId() {
+      let id = parseInt(this.$route.params.id);
+
+      if (id === -1 && this.tagList.length > 0) {
+        id = this.tagList[0].id;
+      } else if (id !== NaN) {
+        let exist = false;
+        for (let i = 0; i < this.tagList.length; i++) {
+          // 检查标签id是否合法
+          if (id === this.tagList[i].id) {
+            exist = true;
+            break;
+          }
         }
-        // if ()
+        if (!exist) {
+          id = -1;
+        }
       }
-    }
-    if (this.activedIndex == -1) {
-      this.articleList = [];
+      this.activedId = id;
+    },
+    currentChange(newIndex) {
+      this.page.pageNum = newIndex;
+      if (this.activedId > 0) {
+        innerHttp
+          .get("/tag/" + this.activedId, {
+            params: {
+              pageNum: this.page.pageNum,
+              pageSize: this.page.pageSize
+            }
+          })
+          .then(res => {
+            this.page = res.data.page;
+            console.log(res);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
     }
   }
 };
@@ -92,5 +140,8 @@ export default {
 }
 .el-tag {
   margin: 2px;
+}
+.el-pagination {
+  margin-top: 20px;
 }
 </style>

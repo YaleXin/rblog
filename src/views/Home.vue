@@ -32,13 +32,6 @@ export default {
   },
   data() {
     return {
-      articleList: [
-        { id: 0, name: "首页 使用axios+tomcat HttpServlet处理跨域请求以及处理cookie", description: "有一个需求，前端通过axios发送用户名和密码到后台，后台查询数据库后，确认合法用户后直接把信息存进session里边，而为了实现这个 需求，就需要前端解决跨域，并且将cookie存到本地计算机中。", date: "2020-2-3", read: 12, ctgr: '分类' },
-        { id: 1, name: "首页 五块钱如何花三天", description: "描述2" },
-        { id: 2, name: "首页 如何让富婆爱上你", description: "描述3" },
-        { id: 3, name: "首页 题目4", description: "描述4" },
-        { id: 4, name: "首页 全国富婆通讯录", description: "描述5" },
-      ],
       page: {
         pageNum: 1,
         pageSize: 5,

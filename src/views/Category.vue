@@ -7,19 +7,36 @@
   <div>
     <el-card>
       <el-tag
-        v-for="(ctgr, index) in categoryList"
-        :type="activedIndex === index ? '' : 'info'"
+        v-for="ctgr in categoryList"
+        :type="activedId === ctgr.id ? '' : 'info'"
         :key="ctgr.id"
       >
-        <a :href="'/category/' + ctgr.id">{{ctgr.name}}</a>
+        <a :href="'/category/' + ctgr.id">
+          <i class="fa fa-bookmark-o" aria-hidden="true"></i>
+          <span>{{ctgr.name}}</span>
+        </a>
       </el-tag>
     </el-card>
     <el-divider content-position="center">该分类下的文章</el-divider>
-    <article-list :articleList="articleList"></article-list>
+    <article-list :articleList="page.content"></article-list>
+    <!-- 分页 -->
+    <div style="text-align: center">
+      <el-pagination
+        background
+        :current-page="page.pageNum"
+        :pager-count="5"
+        @current-change="currentChange"
+        :hide-on-single-page="true"
+        layout="prev, pager, next"
+        :total="page.totalSize"
+        :page-size="page.pageSize"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
+import innerHttp from "../network/innerHttp.js";
 import ArticleList from "../components/ArticleList.vue";
 export default {
   name: "Category",
@@ -28,59 +45,88 @@ export default {
   },
   data() {
     return {
-      articleList: [
-        {
-          id: 0,
-          title: "分类 题目1",
-          dscr:
-            "有一个需求，前端通过axios发送用户名和密码到后台，后台查询数据库后，确认合法用户后直接把信息存进session里边，而为了实现这个 需求，就需要前端解决跨域，并且将cookie存到本地计算机中。",
-          date: "2020-2-3",
-          read: 12,
-          ctgr: "分类"
-        },
-        {
-          id: 1,
-          title: "分类 使用axios+tomcat HttpServlet处理跨域请求以及处理cookie",
-          dscr: "描述2"
-        },
-        { id: 2, title: "分类 题目3", dscr: "描述3" },
-        { id: 3, title: "分类 题目4", dscr: "描述4" },
-        { id: 4, title: "分类 题目5", dscr: "描述5" }
-      ],
-      categoryList: [
-        { id: 10, name: "分类一" },
-        { id: 11, name: "分类二" },
-        { id: 22, name: "分类三" },
-        { id: 33, name: "分类三" },
-        { id: 44, name: "分类三" },
-        { id: 55, name: "分类三" },
-        { id: 66, name: "分类三" },
-        { id: 77, name: "分类三" }
-      ],
-      activedIndex: -1,
+      categoryList: [],
+      page: {
+        pageNum: 1,
+        pageSize: 5,
+        totalSize: 10,
+        totalPages: 0,
+        content: [
+          {
+            id: 1,
+            name: "",
+            content: "",
+            description: "",
+            createTime: "2021-02-09T08:57:19.000+00:00",
+            updateTime: "2021-02-09T08:57:19.000+00:00",
+            category: {
+              id: 1,
+              name: ""
+            },
+            tags: [
+              {
+                id: 1,
+                name: ""
+              }
+            ]
+          }
+        ]
+      },
+      activedId: -1,
       activedCategoryExist: false
     };
   },
-  created() {},
-  activated() {
-    const routePath = this.$route.path;
-    let id = parseInt(routePath.slice(10, routePath.length));
-    if (id === -1) {
-      // 默认显示第一条
-      this.activedIndex = 0;
-      this.activedCategoryExist = true;
-    } else if (id !== NaN) {
-      for (let index = 0; index < this.categoryList.length; index++) {
-        if (id === this.categoryList[index].id) {
-          this.activedIndex = index;
-          this.activedCategoryExist = true;
-          break;
+  created() {
+    innerHttp
+      .get("/category/all")
+      .then(res => {
+        this.categoryList = res.data.categories;
+        this.setActivedId();
+        this.currentChange(this.page.pageNum);
+      })
+      .catch(e => {});
+  },
+  activated() {},
+  computed: {},
+  methods: {
+    setActivedId() {
+      let id = parseInt(this.$route.params.id);
+
+      if (id === -1 && this.categoryList.length > 0) {
+        id = this.categoryList[0].id;
+      } else if (id !== NaN) {
+        let exist = false;
+        for (let i = 0; i < this.categoryList.length; i++) {
+          // 检查分类id是否合法
+          if (id === this.categoryList[i].id) {
+            exist = true;
+            break;
+          }
         }
-        // if ()
+        if (!exist) {
+          id = -1;
+        }
       }
-    }
-    if (this.activedIndex == -1) {
-      this.articleList = [];
+      this.activedId = id;
+    },
+    currentChange(newIndex) {
+      this.page.pageNum = newIndex;
+      if (this.activedId > 0) {
+        innerHttp
+          .get("/category/" + this.activedId, {
+            params: {
+              pageNum: this.page.pageNum,
+              pageSize: this.page.pageSize
+            }
+          })
+          .then(res => {
+            this.page = res.data.page;
+            console.log(res);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
     }
   }
 };
@@ -91,7 +137,10 @@ export default {
   text-decoration: none;
   color: #000;
 }
-.el-tag  {
+.el-tag {
   margin: 2px;
+}
+.el-pagination {
+  margin-top: 20px;
 }
 </style>
