@@ -74,7 +74,7 @@
               <div>
                 <el-form :inline="true" :model="searchForm" @submit.native.prevent>
                   <el-input
-                    placeholder="搜一搜？"
+                    placeholder="搜一搜？按下回车即可搜索"
                     prefix-icon="el-icon-search"
                     @keyup.native.enter="onSubmit"
                     v-model="searchForm.content"
@@ -90,6 +90,7 @@
 </template>
 
 <script>
+import { EventBus } from "../eventBus/index.js";
 export default {
   name: "MbNavigation",
   components: {},
@@ -148,6 +149,7 @@ export default {
     onSubmit() {
       this.showNvg = false;
       this.$router.replace("/search").catch(e => {});
+      EventBus.$emit("searchSubmit", this.searchForm.content);
     }
   }
 };

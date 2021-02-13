@@ -39,7 +39,7 @@
         <div>
           <el-form :inline="true" :model="searchForm">
             <el-input
-              placeholder="搜一搜？"
+              placeholder="搜一搜？按下回车即可搜索"
               prefix-icon="el-icon-search"
               @keyup.native.enter="onSubmit"
               v-model="searchForm.content"
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { EventBus } from "../eventBus/index.js";
 export default {
   name: "PcNavigation",
   components: {},
@@ -68,7 +69,7 @@ export default {
       this.$emit("pcClick", key);
     },
     onSubmit() {
-      alert("submit" + this.searchForm.content);
+      EventBus.$emit("searchSubmit", this.searchForm.content);
     },
     getRout() {
       const routePath = this.$route.path;

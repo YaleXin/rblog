@@ -5,43 +5,98 @@
 -->
 <template>
   <div>
-    <el-divider content-position="center">搜索结果：共<span style="color: #35b8ff"> {{articleList.length}} </span>条</el-divider>
-    <article-list :articleList="articleList"></article-list>
+    <el-divider content-position="center">
+      搜索结果：共
+      <span style="color: #35b8ff">{{page.totalSize}}</span>条
+    </el-divider>
+    <article-list :articleList="page.content"></article-list>
+    <!-- 分页 -->
+    <div style="text-align: center">
+      <el-pagination
+        background
+        :current-page="page.pageNum"
+        :pager-count="5"
+        @current-change="currentChange"
+        :hide-on-single-page="true"
+        layout="prev, pager, next"
+        :total="page.totalSize"
+        :page-size="page.pageSize"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
+import innerHttp from "../network/innerHttp.js";
+import { EventBus } from "../eventBus/index.js";
 import ArticleList from "../components/ArticleList.vue";
 export default {
   name: "Search",
   components: {
     ArticleList
   },
+  created() {
+    EventBus.$on("searchSubmit", nameOrContent => {
+      console.log('按下回车键了');
+      this.nameOrContent = nameOrContent;
+      this.currentChange(this.page.pageNum);
+    });
+  },
+  methods: {
+    currentChange(newIndex) {
+      this.page.pageNum = newIndex;
+      innerHttp
+        .get("/blog/search", {
+          params: {
+            pageNum: this.page.pageNum,
+            pageSize: this.page.pageSize,
+            nameOrcontent: this.nameOrContent
+          }
+        })
+        .then(res => {
+          this.page = res.data.page;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+  },
   data() {
     return {
-      articleList: [
-        {
-          id: 0,
-          title: "搜索 题目1",
-          dscr:
-            "有一个需求，前端通过axios发送用户名和密码到后台，后台查询数据库后，确认合法用户后直接把信息存进session里边，而为了实现这个 需求，就需要前端解决跨域，并且将cookie存到本地计算机中。",
-          date: "2020-2-3",
-          read: 12,
-          ctgr: "分类"
-        },
-        {
-          id: 1,
-          title: "搜索 使用axios+tomcat HttpServlet处理跨域请求以及处理cookie",
-          dscr: "描述2"
-        },
-        { id: 2, title: "搜索 题目3", dscr: "描述3" },
-        { id: 3, title: "搜索 题目4", dscr: "描述4" },
-        { id: 4, title: "搜索 题目5", dscr: "描述5" }
-      ]
+      nameOrContent:"",
+      page: {
+        pageNum: 1,
+        pageSize: 5,
+        totalSize: 0,
+        totalPages: 0,
+        content: [
+          {
+            id: 1,
+            name: "",
+            content: "",
+            description: "",
+            createTime: "2021-02-09T08:57:19.000+00:00",
+            updateTime: "2021-02-09T08:57:19.000+00:00",
+            category: {
+              id: 1,
+              name: ""
+            },
+            tags: [
+              {
+                id: 1,
+                name: ""
+              }
+            ]
+          }
+        ]
+      }
     };
   }
 };
 </script>
 
 <style scoped>
+.el-pagination {
+  margin-top: 20px;
+}
 </style>
