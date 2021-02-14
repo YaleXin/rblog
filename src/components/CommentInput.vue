@@ -5,11 +5,12 @@
 -->
 <template>
   <div>
-    <el-form ref="form" :model="form" :rules="rules"  :inline-message="true">
+    <el-form ref="form" :model="form" :rules="rules" :inline-message="true">
       <el-form-item prop="nickname">
         <el-input
           class="comment-form-item"
           placeholder="昵称"
+          :maxlength="8"
           prefix-icon="el-icon-user"
           v-model="form.nickname"
         ></el-input>
@@ -18,6 +19,7 @@
         <el-input
           class="comment-form-item"
           placeholder="邮箱"
+          :maxlength="30"
           prefix-icon="el-icon-message"
           v-model="form.email"
         ></el-input>
@@ -51,9 +53,11 @@ export default {
         nickname: "",
         email: "",
         content: "",
-        date: "",
+        createTime: "",
         browser: "",
-        OS: ""
+        OS: "",
+        blogId: -1,
+        parentCommentId: -1
       },
       rules: {
         nickname: [{ required: true, message: "请输入昵称", trigger: "blur" }],
@@ -65,7 +69,9 @@ export default {
             trigger: ["blur", "change"]
           }
         ],
-        content: [{ required: true, message: "请输入回复内容", trigger: "blur" }],
+        content: [
+          { required: true, message: "请输入回复内容", trigger: "blur" }
+        ]
       },
       atNickname: "请输入内容"
     };
@@ -74,15 +80,18 @@ export default {
     this.form.OS = CommentUtils.getOS();
     this.form.browser = CommentUtils.getBrowser();
     EventBus.$on("replyClick", (id, nickname) => {
+      console.log("id=" + id);
+      this.form.parentCommentId = id;
       this.form.content = "";
-      this.atNickname = "id=" + id + "name=" + nickname;
+      this.atNickname = "@" + nickname;
     });
   },
   methods: {
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          alert("submit!");
+          this.form.createTime = new Date();
+          this.$emit("comment-submit", this.form);
         } else {
           console.log("error submit!!");
           return false;

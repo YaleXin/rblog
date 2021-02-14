@@ -34,7 +34,7 @@
       <div class="appreciate-wrapper">
         <appreciate></appreciate>
       </div>
-      <comment class="comment-card"></comment>
+      <comment ref="commentCpnt" class="comment-card"></comment>
     </el-card>
   </div>
 </template>
@@ -58,6 +58,11 @@ export default {
     Appreciate
   },
   activated() {},
+
+  mounted() {
+    let blogId = this.$route.params.id;
+    this.$refs.commentCpnt.loadCommentsByBlogId(blogId);
+  },
   created() {
     let blogId = this.$route.params.id;
     innerHttp
@@ -80,8 +85,7 @@ export default {
       })
       .catch(e => {});
   },
-  activated() {},
-  mounted() {},
+
   methods: {
     // 为每个table套一个div
     setTable() {
@@ -113,11 +117,10 @@ export default {
       });
     }
   },
-  mounted() {},
   data() {
     return {
       article: {
-        id: 0,
+        id: -1,
         name: "",
         createTime: "2021-02-09T08:57:19.000+00:00",
         category: { id: 1, name: "分类一" },
@@ -166,12 +169,12 @@ export default {
 }
 .article-content >>> ul {
   margin-left: 0;
-  padding: 5px
+  padding: 5px;
 }
 
 .article-content >>> ol {
   margin-left: 0;
-  padding: 8px
+  padding: 8px;
 }
 .article-content >>> li {
   margin-left: 0;

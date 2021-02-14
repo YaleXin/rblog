@@ -70,7 +70,7 @@
               </template>
             </el-menu-item>
             
-            <el-menu-item index="99">
+            <el-menu-item index="7">
               <div>
                 <el-form :inline="true" :model="searchForm" @submit.native.prevent>
                   <el-input
@@ -143,13 +143,13 @@ export default {
   },
   methods: {
     handleSelect(key, keyPath) {
-      if (key !== "99") this.showNvg = false;
+      if (key !== "7") this.showNvg = false;
       this.$emit("mbClick", key);
     },
     onSubmit() {
-      this.showNvg = false;
       this.$router.replace("/search").catch(e => {});
       EventBus.$emit("searchSubmit", this.searchForm.content);
+      this.showNvg = false;
     }
   }
 };

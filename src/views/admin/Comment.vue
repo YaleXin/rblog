@@ -5,19 +5,25 @@
 -->
 <template>
   <div>
-    <el-table :data="commentList" border style="width: 100%" stripe :fit="true">
-      <el-table-column align="center" label="日期" prop="date"></el-table-column>
+    <el-table :data="page.content" border style="width: 100%" stripe :fit="true">
+      <el-table-column align="center" label="创建日期">
+        <template slot-scope="scope">
+          <span
+            style="margin-left: 10px"
+          >{{ scope.row.createTime.split('T')[0] }} {{scope.row.createTime.split('T')[1].split('.')[0]}}</span>
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="评论者">
-        <el-table-column align="center" label="昵称" prop="author"></el-table-column>
+        <el-table-column align="center" label="昵称" prop="nickname"></el-table-column>
         <el-table-column align="center" label="邮箱" prop="email"></el-table-column>
       </el-table-column>
       <el-table-column align="center" label="所属文章" prop="blogName"></el-table-column>
-      <el-table-column align="center" label="回复楼层" prop="blogName"></el-table-column>
+      <!-- <el-table-column align="center" label="回复楼层" prop="blogName"></el-table-column> -->
       <el-table-column align="center" label="回复内容" prop="content"></el-table-column>
       <el-table-column align="center" fixed="right" label="操作" width="100">
         <template slot-scope="scope">
           <el-button
-            v-if="scope.row.accept"
+            v-if="scope.row.audited"
             @click="rejectCommentClick(scope.row.id, scope.$index)"
             type="primary"
             size="small"
@@ -32,21 +38,24 @@
         </template>
       </el-table-column>
     </el-table>
-
+    <!-- 分页 -->
     <div style="text-align: center;margin-top: 20px;">
       <el-pagination
         background
+        :current-page="page.pageNum"
         :pager-count="5"
+        @current-change="currentChange"
         :hide-on-single-page="true"
         layout="prev, pager, next"
-        :total="1000"
-        :page-size="20"
+        :total="page.totalSize"
+        :page-size="page.pageSize"
       ></el-pagination>
     </div>
   </div>
 </template>
 
 <script>
+import innerHttp from "../../network/innerHttp.js";
 export default {
   name: "Comment",
   components: {},
@@ -101,34 +110,128 @@ export default {
           blogName: "blog",
           accept: false
         }
-      ]
+      ],
+      page: {
+        pageNum: 1,
+        pageSize: 5,
+        totalSize: 10,
+        totalPages: 0,
+        content: [
+          {
+            id: 1,
+            nickname: "",
+            email: "",
+            content: "",
+            createTime: "2021-02-09T08:57:19.000+00:00",
+            audited: false,
+            os: "",
+            browser: "",
+            sendEmailed: false,
+            blogName: ""
+          }
+        ]
+      }
     };
   },
+  created() {
+    this.currentChange(this.page.pageNum);
+  },
   methods: {
-    rejectCommentClick(id, index) {
-      this.commentList[index].accept = false;
-    },
-    acceptCommentClick(id, index) {
-      this.commentList[index].accept = true;
-    },
-    deleteCommentClick(id) {
-      this.$confirm("此操作将永久删除该该评论: " + id + ", 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          });
+    currentChange(newIndex) {
+      this.page.pageNum = newIndex;
+
+      innerHttp
+        .get("/admin/comment/commentPage", {
+          params: {
+            pageNum: this.page.pageNum,
+            pageSize: this.page.pageSize
+          }
         })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
+        .then(res => {
+          this.page = res.data.page;
+        })
+        .catch(e => {
+          console.log(e);
         });
+    },
+    rejectCommentClick(cmtId, index) {
+      if (cmtId > 0) {
+        innerHttp
+          .put("/admin/comment/reject", {
+            data: JSON.stringify(cmtId)
+          })
+          .then(res => {
+            console.log(res);
+            console.log(res.data.result);
+            if (res.data.result > 0) {
+              this.opSuccess(index, false);
+            }
+          })
+          .catch(e => {});
+      }
+    },
+    acceptCommentClick(cmtId, index) {
+      if (cmtId > 0) {
+        innerHttp
+          .put("/admin/comment/accept", {
+            data: JSON.stringify(cmtId)
+          })
+          .then(res => {
+            console.log(res);
+            console.log(res.data.result);
+            if (res.data.result > 0) {
+              this.opSuccess(index, true);
+            }
+          })
+          .catch(e => {});
+      }
+    },
+    deleteSuccess() {
+      this.$message({
+        showClose: true,
+        type: "success",
+        message: "删除成功!"
+      });
+      this.currentChange(this.page.pageNum);
+    },
+    opSuccess(index, rejectOraccept) {
+      this.$message({
+        showClose: true,
+        message: "操作成功",
+        type: "success"
+      });
+      this.page.content[index].audited = rejectOraccept;
+      console.log(this.page.content[index].audited);
+    },
+    deleteCommentClick(cmtId) {
+      if (cmtId > 0) {
+        this.$confirm("此操作将永久删除该该评论, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            console.log("cmtId = " + cmtId);
+            innerHttp
+              .delete("/admin/comment/delete", {
+                data: {
+                  id: JSON.stringify(cmtId)
+                }
+              })
+              .then(res => {
+                if (res.data.result > 0) {
+                  this.deleteSuccess();
+                }
+              })
+              .catch(e => {});
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消删除"
+            });
+          });
+      }
     }
   }
 };

@@ -35,14 +35,17 @@ export default {
   components: {
     ArticleList
   },
-  created() {
-    EventBus.$on("searchSubmit", nameOrContent => {
-      console.log('按下回车键了');
-      this.nameOrContent = nameOrContent;
-      this.currentChange(this.page.pageNum);
-    });
+  activated() {
+    EventBus.$on("searchSubmit", this.receiveParam);
   },
+  created() {},
   methods: {
+    // 按下回车键后触发
+    receiveParam(param) {
+      this.nameOrContent = param;
+      this.currentChange(this.page.pageNum);
+      this.pageNum = 1;
+    },
     currentChange(newIndex) {
       this.page.pageNum = newIndex;
       innerHttp
@@ -63,7 +66,7 @@ export default {
   },
   data() {
     return {
-      nameOrContent:"",
+      nameOrContent: "",
       page: {
         pageNum: 1,
         pageSize: 5,
