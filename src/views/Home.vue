@@ -79,8 +79,11 @@ export default {
     },
     
   },
-  activated() {
+  created(){
     this.currentChange(this.page.pageNum);
+  },
+  activated() {
+    
   },
 };
 </script>

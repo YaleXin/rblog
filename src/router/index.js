@@ -5,6 +5,7 @@
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 Vue.use(VueRouter)
 let Home = () => import('../views/Home.vue')
 let Category = () => import('../views/Category.vue')
@@ -115,6 +116,18 @@ const router = new VueRouter({
   // mode: 'hash',
   mode: 'history',
   // base: process.env.BASE_URL,
+})
+
+// 登录拦截器
+router.beforeEach((to, from, next) => {
+  let path = to.path;
+  if (path !== '/admin/login' && path.substr(0, 7) === '/admin/') {
+    // todo
+    next();
+    // next('/admin/login');
+  } else {
+    next();
+  }
 })
 
 export default router

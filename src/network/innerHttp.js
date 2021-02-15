@@ -5,8 +5,9 @@
  */
 import axios from "axios"
 import { Message } from "element-ui";
+import { MessageBox } from "element-ui";
 let innerHttp = axios.create({
-	baseURL: '/api_serv',
+	baseURL: '/api',
 	// 请求头部
 	// headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
 	// 超时时间
@@ -39,6 +40,17 @@ innerHttp.interceptors.response.use(
 					message: '发送数据错误',
 					type: "error"
 				});
+					break;
+				case 480:
+					MessageBox.alert('登录信息超时，请重新登录!', '登录超时', {
+						confirmButtonText: '跳至登录界面',
+						callback: action => {
+							let url = window.location.href;
+							if (url.indexOf('/admin/login') === -1) {
+								window.location.href = '/admin/login'
+							}
+						}
+					})
 					break;
 				case 500: Message({
 					showClose: true,

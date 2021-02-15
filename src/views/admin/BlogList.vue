@@ -145,7 +145,7 @@ export default {
       this.page.pageNum = newIndex;
 
       innerHttp
-        .get("/blog/blogPage", {
+        .get("/admin/blog/blogPage", {
           params: {
             pageNum: this.page.pageNum,
             pageSize: this.page.pageSize

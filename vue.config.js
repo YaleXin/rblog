@@ -11,12 +11,12 @@ module.exports = {
     devServer: {
         port: 8081,
         proxy: {
-            '/api_serv': {
+            '/api': {
                 target: 'http://localhost:8080/api/',
                 ws: false,
                 changeOrigin: true,
                 pathRewrite: {
-                    '^/api_serv': '',
+                    '^/api': '',
                 }
             },
             '/jinri': {

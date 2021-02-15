@@ -21,39 +21,12 @@
         <el-button type="primary" @click="submitForm('pswForm')">提交</el-button>
       </el-form-item>
     </el-form>
-    <el-divider content-position="center">修改其他</el-divider>
-    <el-form inline :model="infoForm" :rules="infoRules" ref="infoForm" label-width="100px">
-      <el-form-item label="头像地址" prop="avatarUrl">
-        <el-input
-          placeholder="请输入URL(不含协议类型)"
-          v-model="infoForm.avatarUrl"
-          class="input-with-select"
-        >
-          <el-select
-            v-model="infoForm.protocol"
-            slot="prepend"
-            placeholder="请选择协议类型"
-            style="width: 90px;"
-          >
-            <el-option label="https://" value="https://"></el-option>
-            <el-option label="http://" value="http://"></el-option>
-          </el-select>
-        </el-input>
-      </el-form-item>
-      <el-form-item label="用户名" prop="username">
-        <el-input v-model="infoForm.username" autocomplete="off" placeholder="请输入您的新用户名"></el-input>
-      </el-form-item>
-      <el-form-item label="用户昵称" prop="nickname">
-        <el-input v-model="infoForm.nickname" autocomplete="off" placeholder="请输入您的新昵称"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('infoForm')">提交</el-button>
-      </el-form-item>
-    </el-form>
   </div>
 </template>
 
 <script>
+import md5 from "js-md5";
+import innerHttp from "../../network/innerHttp.js";
 export default {
   name: "User",
   components: {},
@@ -73,6 +46,8 @@ export default {
         callback(new Error("请再次输入密码"));
       } else if (value !== this.pswForm.pass) {
         callback(new Error("两次输入密码不一致!"));
+      } else if (value === this.pswForm.oldPass) {
+        callback(new Error("新密码不应该相同"));
       } else {
         callback();
       }
@@ -105,43 +80,70 @@ export default {
         oldPass: { validator: validatePass, trigger: "blur" },
         pass: { validator: validatePass, trigger: "blur" },
         checkPass: { validator: validatePass2, trigger: "blur" }
-      },
-      infoForm: {
-        avatarUrl: "",
-        protocol: "https://",
-        nickname: "",
-        username: ""
-      },
-      infoRules: {
-        nickname: { validator: validateEnglishAndNumber, trigger: "blur" },
-        username: {
-          required: true,
-          message: "请输入您的用户名",
-          trigger: "blur"
-        },
-        protocol: {
-          required: true,
-          message: "请输入头像地址协议",
-          trigger: "blur"
-        },
-        avatarUrl: {
-          required: true,
-          message: "请输入头像地址",
-          trigger: "blur"
-        }
       }
     };
   },
+  created() {},
+  activated() {
+    let user = this.$store.state.user;
+    if (user.id <= 0) {
+      this.$alert("登录信息超时，请重新登录!", "登录超时", {
+        confirmButtonText: "跳至登录界面",
+        callback: action => {
+          this.$router.replace("/admin/login");
+        }
+      });
+    }
+  },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs.pswForm.validate(valid => {
         if (valid) {
-          alert("submit!");
+          this.updatePassword();
         } else {
           console.log("error submit!!");
           return false;
         }
       });
+    },
+    updatePasswordSuccess() {
+      this.$message({
+        message: "修改成功，请重新登录",
+        showClose: true,
+        type: "success"
+      });
+      this.$store.commit("removeUser");
+      this.$router.replace("/admin/login").catch(e => {});
+    },
+    updatePasswordFail() {
+      this.$message({
+        message: "修改失败，请重试",
+        showClose: true,
+        type: "error"
+      });
+    },
+    updatePassword() {
+      console.log("updatePassword ");
+      let user = this.$store.state.user;
+      let md5OldPsw = md5(this.pswForm.oldPass);
+      let md5NewPsw = md5(this.pswForm.pass);
+      innerHttp
+        .post("/admin/user/update", {
+          data: {
+            oldPsw: md5OldPsw,
+            newPsw: md5NewPsw,
+            username: user.username
+          }
+        })
+        .then(res => {
+          console.log(res);
+          if (res.data > 0) {
+            this.updatePasswordSuccess();
+          } else {
+            this.updatePasswordFail();
+          }
+        })
+        .catch(e => {});
     }
   }
 };

@@ -19,14 +19,31 @@
 </template>
 
 <script>
+import innerHttp from "../network/innerHttp.js";
 import Navigation from "./admin/Navigation.vue";
 export default {
   name: "Admin",
   components: {
     Navigation
   },
+  methods: {
+    getUser() {
+      innerHttp
+        .get("/admin/user/info")
+        .then(res => {
+          if (res.data !== undefined) {
+            this.$store.commit("saveUser", res.data);
+          }
+        })
+        .catch(e => {});
+    }
+  },
   created() {},
   activated() {
+    if (this.$route.path !== "/admin/login") {
+      // 如果不是登录路由 就去后台请求session中用户信息
+      this.getUser();
+    }
     let node = document.getElementById("admin-div").parentElement;
     node.style.maxWidth = "100%";
   }
@@ -34,5 +51,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

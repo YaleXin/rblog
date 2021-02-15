@@ -30,7 +30,7 @@
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="handleSelect('5-1', null)">修改信息</el-dropdown-item>
-            <el-dropdown-item @click.native="handleSelect('5-2', null)">注销</el-dropdown-item>
+            <el-dropdown-item v-if="logined" @click.native="handleSelect('5-2', null)">注销</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-menu-item>
@@ -39,14 +39,37 @@
 </template>
 
 <script>
+import innerHttp from "../../network/innerHttp.js";
 export default {
   name: "Navigation",
   components: {},
   methods: {
     handleSelect(key, keyPath) {
-      // console.log(typeof(key)) string
-      // console.log(key, keyPath);
-      this.changeAdminRoute(key);
+      if (key === "5-2") {
+        console.log("try to logout");
+        this.logout();
+      } else {
+        this.changeAdminRoute(key);
+      }
+    },
+    logoutSuccess() {
+      this.$message({
+        message: "注销成功",
+        type: "success",
+        showClose: true
+      });
+      this.$store.commit("removeUser");
+      this.$router.replace("/admin/login").catch(e => {});
+    },
+    logout() {
+      innerHttp
+        .delete("/admin/logout/")
+        .then(res => {
+          if (res.data > 0) {
+            this.logoutSuccess();
+          }
+        })
+        .catch(e => {});
     },
     changeAdminRoute(index) {
       switch (index) {
@@ -92,6 +115,9 @@ export default {
           activeIndex = "-1";
       }
       return activeIndex;
+    },
+    logined() {
+      return this.$store.state.user.id > 0;
     }
   }
 };
