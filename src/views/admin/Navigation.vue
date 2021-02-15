@@ -29,7 +29,7 @@
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item @click.native="handleSelect('5-1', null)">修改信息</el-dropdown-item>
+            <el-dropdown-item v-if="logined" @click.native="handleSelect('5-1', null)">修改信息</el-dropdown-item>
             <el-dropdown-item v-if="logined" @click.native="handleSelect('5-2', null)">注销</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>

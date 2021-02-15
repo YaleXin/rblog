@@ -51,6 +51,21 @@ export default {
           .catch(e => {});
       }
     },
+    submitCommentSuccess() {
+      this.$message({
+        showClose: true,
+        message: "评论成功，请耐心等待管理员审核",
+        type: "success"
+      });
+      this.commentFinished = true;
+    },
+    submitCommentFail(reason) {
+      this.$message({
+        showClose: true,
+        message: "评论失败，原因：" + reason ,
+        type: "error"
+      });
+    },
     submitComment(comment) {
       let blogId = this.$route.params.id;
       comment.blogId = parseInt(blogId);
@@ -66,13 +81,13 @@ export default {
           data: JSON.stringify(comment)
         })
         .then(res => {
-          if (res.status === 200 && res.data.addComment.id > 0) {
-            this.$message({
-              showClose: true,
-              message: "评论成功",
-              type: "success"
-            });
-            this.commentFinished = true;
+          let result = res.data.result;
+          if (result == 0) {
+            this.submitCommentFail('不明');
+          } else if (result == 1) {
+            this.submitCommentSuccess();
+          } else if (result == 2) {
+            this.submitCommentFail('过于频繁，请一分钟后尝试');
           }
         })
         .catch(e => {});

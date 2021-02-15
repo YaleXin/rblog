@@ -118,16 +118,4 @@ const router = new VueRouter({
   // base: process.env.BASE_URL,
 })
 
-// 登录拦截器
-router.beforeEach((to, from, next) => {
-  let path = to.path;
-  if (path !== '/admin/login' && path.substr(0, 7) === '/admin/') {
-    // todo
-    next();
-    // next('/admin/login');
-  } else {
-    next();
-  }
-})
-
 export default router

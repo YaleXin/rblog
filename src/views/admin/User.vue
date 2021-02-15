@@ -83,19 +83,21 @@ export default {
       }
     };
   },
-  created() {},
-  activated() {
-    let user = this.$store.state.user;
-    if (user.id <= 0) {
-      this.$alert("登录信息超时，请重新登录!", "登录超时", {
-        confirmButtonText: "跳至登录界面",
-        callback: action => {
-          this.$router.replace("/admin/login");
-        }
-      });
-    }
+  created() {
+    this.getUser();
   },
+  activated() {},
   methods: {
+    getUser() {
+      innerHttp
+        .get("/admin/user/info")
+        .then(res => {
+          if (res.data !== undefined) {
+            this.$store.commit("saveUser", res.data);
+          }
+        })
+        .catch(e => {});
+    },
     submitForm(formName) {
       this.$refs.pswForm.validate(valid => {
         if (valid) {

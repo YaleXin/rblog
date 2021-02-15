@@ -47,6 +47,9 @@ import innerHttp from "../../network/innerHttp.js";
 export default {
   name: "Login",
   components: {},
+  activated() {
+    console.log("activated");
+  },
   data() {
     return {
       loginForm: {
