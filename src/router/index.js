@@ -115,6 +115,7 @@ const router = new VueRouter({
   routes,
   // mode: 'hash',
   mode: 'history',
+  base: '/blog/'
   // base: process.env.BASE_URL,
 })
 

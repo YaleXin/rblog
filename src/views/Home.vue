@@ -76,15 +76,14 @@ export default {
         .catch(e => {
           console.log(e);
         });
-    },
-    
+    }
   },
-  created(){
+  created() {
     this.currentChange(this.page.pageNum);
   },
   activated() {
-    
-  },
+    document.title = "黄阿信的博客";
+  }
 };
 </script>
 

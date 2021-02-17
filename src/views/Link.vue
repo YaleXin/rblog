@@ -6,8 +6,11 @@
 <template>
   <div>
     <el-row v-for="(linkCategory, index) in linkList" :key="index">
-      <h3>{{linkCategory.type}}</h3>
-      <el-row v-for="(link, index) in linkCategory.contentList" :key="index" class="link-item">
+      <el-divider content-position="center">
+        <h3>{{linkCategory.type}}</h3>
+      </el-divider>
+
+      <el-row v-for="(link, index) in linkCategory.content" :key="index" class="link-item">
         <div class="avatar-wrapper">
           <img :src="link.avatar" class="link-avatar" alt />
         </div>
@@ -18,9 +21,9 @@
           </p>
           <p style="font-size: 0.8em;">
             <i class="fa fa-link" aria-hidden="true"></i>
-            <a style="color: #35b8ff" :href=" '//'+ link.link" target="_blank"> {{link.link}} </a>
+            <a style="color: #35b8ff" :href=" '//'+ link.url" target="_blank">{{link.url}}</a>
           </p>
-          <p>{{link.dscr}}</p>
+          <p>{{link.description}}</p>
         </div>
       </el-row>
     </el-row>
@@ -28,43 +31,43 @@
 </template>
 
 <script>
+import innerHttp from "../network/innerHttp.js";
 export default {
   name: "Link",
   components: {},
+  created() {
+    innerHttp
+      .get("/link")
+      .then(res => {
+        console.log(res.data.links);
+        this.linkList = res.data.links;
+      })
+      .catch(e => {});
+  },
+  activated() {
+    document.title = "友情链接";
+  },
+  methods: {},
   data() {
     return {
       linkList: [
         {
-          type: "在线处理工具",
-          contentList: [
+          id: 1,
+          type: "博客链接",
+          content: [
             {
-              name: "黄阿信的个人博客1",
-              avatar: "https://www.yalexin.top/images/cat_mouse.jpg",
-              dscr: "要么改变世界，要么适应世界",
-              link: "www.yalexin.top"
+              id: 1,
+              name: "黄阿信的博客",
+              description: "要么改变世界，要么适应世界",
+              url: "www.yalexin.com",
+              avatar: "https://www.yalexin.top/images/cat_mouse.jpg"
             },
             {
-              name: "黄阿信的个人博客2",
-              avatar: "https://www.yalexin.top/images/cat_mouse.jpg",
-              dscr: "要么改变世界，要么适应世界",
-              link: "www.yalexin.top"
-            }
-          ]
-        },
-        {
-          type: "博客",
-          contentList: [
-            {
-              name: "黄阿信的个人博客1",
-              avatar: "https://www.yalexin.top/images/cat_mouse.jpg",
-              dscr: "要么改变世界，要么适应世界",
-              link: "www.yalexin.top"
-            },
-            {
-              name: "黄阿信的个人博客2",
-              avatar: "https://www.yalexin.top/images/cat_mouse.jpg",
-              dscr: "要么改变世界，要么适应世界",
-              link: "www.yalexin.top"
+              id: 2,
+              name: "黄阿信的hexo博客",
+              description: "要么改变世界，要么适应世界",
+              url: "https://yalexin.gitee.io/",
+              avatar: "https://qiniu.yalexin.top/home.png"
             }
           ]
         }

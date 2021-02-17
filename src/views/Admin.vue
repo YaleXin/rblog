@@ -43,6 +43,7 @@ export default {
     if (this.$route.path !== "/admin/login") {
       // 如果不是登录路由 就去后台请求session中用户信息
       this.getUser();
+      document.title = "后台管理";
     }
     let node = document.getElementById("admin-div").parentElement;
     node.style.maxWidth = "100%";

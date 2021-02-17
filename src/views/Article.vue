@@ -26,9 +26,11 @@
       </div>
       <el-divider></el-divider>
       <div class="tag-group">
-        <el-tag type="info" v-for="(tag, index) in article.tags" :key="index">
-          <i class="fa fa-tag" aria-hidden="true"></i>
-          {{tag.name}}
+        <el-tag v-for="tag in article.tags" :key="tag.id">
+          <a :href="applicationPre()+ '/tag/' + tag.id">
+            <i class="fa fa-tag" aria-hidden="true"></i>
+            <span>{{tag.name}}</span>
+          </a>
         </el-tag>
       </div>
       <div class="appreciate-wrapper">
@@ -57,7 +59,8 @@ export default {
     Comment,
     Appreciate
   },
-  activated() {},
+  activated() {
+  },
 
   mounted() {
     let blogId = this.$route.params.id;
@@ -70,6 +73,7 @@ export default {
       .then(res => {
         if (res.status === 200) {
           this.article = res.data.blog;
+          document.title  = this.article.name;
           this.$nextTick(() => {
             Prism.highlightAll();
             this.setTable();
@@ -87,6 +91,10 @@ export default {
   },
 
   methods: {
+    applicationPre() {
+      // return process.env.NODE_ENV === "production" ? "/blog" : "";
+      return "/blog";
+    },
     // 为每个table套一个div
     setTable() {
       let tables = [].slice.apply(document.getElementsByTagName("table"));
@@ -123,12 +131,13 @@ export default {
         id: -1,
         name: "",
         createTime: "2021-02-09T08:57:19.000+00:00",
-        category: { id: 1, name: "分类一" },
-        views: 12,
+        category: {
+          //  id: 1, name: "分类一"
+        },
+        views: 0,
         content: "",
         tags: [
-          { id: 1, name: "代码高亮" },
-          { id: 2, name: "fefrg" }
+          // { id: 1, name: "" }
         ]
       }
     };
@@ -186,6 +195,10 @@ export default {
 .el-tag {
   margin: 2px;
   font-size: 0.8em;
+}
+.el-tag > a {
+  text-decoration: none;
+  color: #000;
 }
 .appreciate-wrapper {
   text-align: center;

@@ -37,6 +37,7 @@ export default {
   },
   activated() {
     EventBus.$on("searchSubmit", this.receiveParam);
+    document.title = "搜索";
   },
   created() {},
   methods: {

@@ -9,20 +9,20 @@
       <!-- 顶楼贴 -->
       <el-row>
         <el-col :span="avaterColSize">
-          <el-avatar
-            :size="avatarSize"
-            :src="'https://v1.alapi.cn/api/avatar?email=' + topCmt.email"
-          >
+          <el-avatar :size="avatarSize" :src="gravaterImg(topCmt.email)">
             <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
           </el-avatar>
         </el-col>
         <el-col :span="infoColSize">
           <div class="comment-info">
-            By
+            <span v-if="topCmt.adminComment" style="color:red">
+              <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+              <span>博主</span>
+            </span>
             <span class="comment-author">{{topCmt.nickname}}</span>
-            At
+
             <span>{{topCmt.createTime.split('T')[0]}} {{topCmt.createTime.split('T')[1].split('.')[0]}}</span>
-            With
+
             <span>{{topCmt.os}}</span>
             <span>{{topCmt.browser}}</span>
           </div>
@@ -56,20 +56,18 @@
           >
             <el-row>
               <el-col :span="avaterColSize">
-                <el-avatar
-                  :size="avatarSize"
-                  :src="'https://v1.alapi.cn/api/avatar?email=' + replyCmt.email"
-                >
+                <el-avatar :size="avatarSize" :src="gravaterImg(replyCmt.email)">
                   <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
                 </el-avatar>
               </el-col>
               <el-col :span="infoColSize">
                 <div class="comment-info">
-                  By
+                  <span v-if="replyCmt.adminComment" style="color:red">
+                    <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                    <span>博主</span>
+                  </span>
                   <span class="comment-author">{{replyCmt.nickname}}</span>
-                  At
                   <span>{{replyCmt.createTime.split('T')[0]}} {{replyCmt.createTime.split('T')[1].split('.')[0]}}</span>
-                  With
                   <span>{{replyCmt.os}}</span>
                   <span>{{replyCmt.browser}}</span>
                 </div>
@@ -107,6 +105,7 @@
 </template>
 
 <script>
+import md5 from "js-md5";
 import { EventBus } from "../eventBus/index.js";
 export default {
   name: "CommentList",
@@ -161,6 +160,14 @@ export default {
     replyClick(id, atNickname) {
       EventBus.$emit("replyClick", id, atNickname);
       document.getElementById("input-textarea").scrollIntoView();
+    },
+    gravaterImg(email) {
+      const types = ["identicon", "monsterid", "wavatar", "retro"];
+      const type = types[email.length % 4];
+      // https://www.gravatar.com/avatar/5ca4962228b25bb180ed14794013c4bc?d=monsterid
+      return (
+        "https://www.gravatar.com/avatar/" + md5(email.trim()) + "?d=" + type
+      );
     }
   },
   computed: {

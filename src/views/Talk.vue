@@ -34,6 +34,9 @@ export default {
       commentFinished: false
     };
   },
+  activated() {
+    document.title = "留言";
+  },
   created() {
     this.loadCommentsByBlogId(0);
   },

@@ -8,7 +8,10 @@
     <el-card>
       <div class="article-title-wrapper" style="text-align: center;">
         <h1 class="article-title">
-          <a :href="'/blog/'+article.id" class="article-title-link">{{article.name}}</a>
+          <a
+            :href=" applicationPre()+ '/blog/'+article.id"
+            class="article-title-link"
+          >{{article.name}}</a>
         </h1>
         <div class="article-detail">
           <i class="fa fa-calendar"></i>
@@ -25,7 +28,7 @@
         <p>{{article.description}} ...</p>
       </div>
       <div class="readMore">
-        <a :href="'/blog/'+article.id" class="readMore-btn">阅读全文 »</a>
+        <a :href=" applicationPre() +  '/blog/'+article.id" class="readMore-btn">阅读全文 »</a>
       </div>
     </el-card>
   </div>
@@ -35,6 +38,12 @@
 export default {
   name: "ArticleCard",
   components: {},
+  methods: {
+    applicationPre() {
+      // return process.env.NODE_ENV === "production" ? "/blog" : "";
+      return "/blog";
+    }
+  },
   props: {
     article: {
       type: Object,

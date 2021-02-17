@@ -22,7 +22,11 @@
             :key="index1"
             :timestamp="blog.createTime.split('T')[0] +' '+ blog.createTime.split('T')[1].split('.')[0]"
           >
-            <a target="_blank" :href="'/blog/' + blog.id" class="article-title-link">{{blog.name}}</a>
+            <a
+              target="_blank"
+              :href="applicationPre()+ '/blog/' + blog.id"
+              class="article-title-link"
+            >{{blog.name}}</a>
           </el-timeline-item>
         </el-timeline>
       </el-card>
@@ -43,6 +47,16 @@ export default {
         this.blogList = res.data.blogs;
       })
       .catch(e => {});
+  },
+  methods: {
+    applicationPre() {
+      console.log(process.env.NODE_ENV);
+      // return process.env.NODE_ENV === "production" ? "/blog" : "";
+      return "/blog";
+    }
+  },
+  activated() {
+    document.title = "归档";
   },
   computed: {
     totalNum() {

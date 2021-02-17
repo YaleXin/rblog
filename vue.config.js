@@ -32,5 +32,10 @@ module.exports = {
     },
     // assetsDir: 'static',
     // parallel: false,
-    // publicPath: './',
+    publicPath: process.env.NODE_ENV === 'production' ? '/blog/' : '/',
+    outputDir: 'blog',
+    assetsDir: 'static',
+    configureWebpack: (config) => {
+        config.optimization.minimizer[0].options.terserOptions.compress.drop_console =true;
+    }
 }

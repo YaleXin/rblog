@@ -4,14 +4,14 @@
  * @LastEditors : YaleXin
 -->
 <template>
-  <div>
+  <div >
     <el-card>
       <el-tag
         v-for="ctgr in categoryList"
         :type="activedId === ctgr.id ? '' : 'info'"
         :key="ctgr.id"
       >
-        <a :href="'/category/' + ctgr.id">
+        <a :href="applicationPre()+ '/category/' + ctgr.id">
           <i class="fa fa-bookmark-o" aria-hidden="true"></i>
           <span>{{ctgr.name}}</span>
         </a>
@@ -86,9 +86,16 @@ export default {
       })
       .catch(e => {});
   },
-  activated() {},
+  activated() {
+    document.title = '分类'
+  },
   computed: {},
   methods: {
+    applicationPre() {
+      console.log(process.env.NODE_ENV);
+      // return process.env.NODE_ENV === "production" ? "/blog" : "";
+      return "/blog";
+    },
     setActivedId() {
       let id = parseInt(this.$route.params.id);
 

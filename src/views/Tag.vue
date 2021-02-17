@@ -5,13 +5,13 @@
 -->
 <template>
   <div>
-    <el-card>
+    <el-card >
       <el-tag
         v-for="tag in tagList"
         :type="activedId === tag.id ? '' : 'info'"
         :key="tag.id"
       >
-        <a :href="'/tag/' + tag.id">
+        <a :href="applicationPre()+ '/tag/' + tag.id">
           <i class="fa fa-tag" aria-hidden="true"></i>
           <span>{{tag.name}}</span>
         </a>
@@ -87,9 +87,16 @@ export default {
       })
       .catch(e => {});
   },
-  activated() {},
+  activated() {
+    document.title = '标签'
+  },
   computed: {},
   methods: {
+    applicationPre() {
+      console.log(process.env.NODE_ENV);
+      // return process.env.NODE_ENV === "production" ? "/blog" : "";
+      return "/blog";
+    },
     setActivedId() {
       let id = parseInt(this.$route.params.id);
 

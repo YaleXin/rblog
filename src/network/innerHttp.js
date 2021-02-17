@@ -47,7 +47,8 @@ innerHttp.interceptors.response.use(
 						callback: action => {
 							let url = window.location.href;
 							if (url.indexOf('/admin/login') === -1) {
-								window.location.href = '/admin/login'
+								let prefix = process.env.NODE_ENV === "production" ? "/blog" : "";
+								window.location.href = prefix + '/admin/login'
 							}
 						}
 					})
