@@ -21,7 +21,7 @@
     <el-drawer :visible.sync="showNvg" direction="ltr" size="70%">
       <el-row type="flex" justify="center">
         <el-col :span="10">
-          <el-avatar :size="100" src="https://blog.yalexin.top/images/cat_mouse.jpg"></el-avatar>
+          <el-avatar :size="100" src="//qiniu.yalexin.top/cat_mouse.jpg"></el-avatar>
         </el-col>
       </el-row>
 

@@ -4,7 +4,7 @@
  * @LastEditors : YaleXin
 -->
 <template>
-  <div>
+  <div   >
     <article-card v-for="article in articleList" :key="article.id" :article="article"></article-card>
   </div>
 </template>

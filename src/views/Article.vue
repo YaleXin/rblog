@@ -4,7 +4,7 @@
  * @LastEditors : YaleXin
 -->
 <template>
-  <div>
+  <div id="#article-content">
     <el-card>
       <div class="article-title-wrapper" style="text-align: center;">
         <h1 class="article-title">{{article.name}}</h1>
@@ -59,21 +59,33 @@ export default {
     Comment,
     Appreciate
   },
-  activated() {
-  },
+  activated() {},
 
   mounted() {
     let blogId = this.$route.params.id;
     this.$refs.commentCpnt.loadCommentsByBlogId(blogId);
   },
   created() {
+    const loading = this.$loading({
+      lock: true, //lock的修改符--默认是false
+      text: "Loading", //显示在加载图标下方的加载文案
+      spinner: "el-icon-loading", //自定义加载图标类名
+      background: "rgba(0, 0, 0, 0.7)", //遮罩层颜色
+      target: document.querySelector("#article-content") //loadin覆盖的dom元素节点
+    });
+    setTimeout(() => {
+      loading.close();
+    }, 3000);
     let blogId = this.$route.params.id;
     innerHttp
       .get("/blog/" + blogId)
       .then(res => {
         if (res.status === 200) {
           this.article = res.data.blog;
-          document.title  = this.article.name;
+          document.title = this.article.name;
+          //成功回调函数停止加载
+          loading.close();
+
           this.$nextTick(() => {
             Prism.highlightAll();
             this.setTable();
