@@ -1,8 +1,7 @@
 @charset "utf-8";
 
 .typo p {
-  font-size: 16px;
-  font-weight: 300;
+  font-size: 18px;
   line-height: 1.8;
   text-align: justify;
 }
@@ -230,7 +229,7 @@
 }
 
 .typo h1,.typo  h2,.typo  h3,.typo  h4,.typo  h5,.typo  h6 {
-  font-family: PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+  font-family: Lato,"PingFang SC","Microsoft YaHei",sans-serif;
   font-weight: 100;
   color: #000;
   line-height: 1.35;

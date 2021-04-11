@@ -228,10 +228,7 @@ export default {
         .catch(e => {});
     },
     parseData2Form(rawBlog) {
-      let createTimeStr =
-        rawBlog.createTime.split("T")[0] +
-        " " +
-        rawBlog.createTime.split("T")[1].split(".")[0];
+      let createTimeStr = rawBlog.createTime;
       rawBlog.createTime = new Date(createTimeStr);
       rawBlog.date = rawBlog.createTime;
       rawBlog.time = rawBlog.createTime;

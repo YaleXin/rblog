@@ -19,6 +19,7 @@
           <span style="margin-left:2px; font-size: 14px;">{{article.category.name}}</span>
         </div>
       </div>
+      <el-divider></el-divider>
       <div class="article-content typo" v-html="article.content">
         <!-- v-html="article.content" -->
       </div>
