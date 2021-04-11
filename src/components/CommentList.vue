@@ -166,7 +166,7 @@ export default {
       const type = types[email.length % 4];
       // https://www.gravatar.com/avatar/5ca4962228b25bb180ed14794013c4bc?d=monsterid
       return (
-        "https://www.gravatar.com/avatar/" + md5(email.trim()) + "?d=" + type
+        "https://sdn.geekzu.org/avatar/" + md5(email.trim()) + "?d=" + type
       );
     }
   },

@@ -14,14 +14,14 @@
         <template slot-scope="scope">
           <span
             style="margin-left: 10px"
-          >{{ scope.row.updateTime.split('T')[0] }} {{scope.row.updateTime.split('T')[1].split('.')[0]}}</span>
+          >{{ scope.row.updateTime}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="创建时间日期">
         <template slot-scope="scope">
           <span
             style="margin-left: 10px"
-          >{{ scope.row.createTime.split('T')[0] }} {{scope.row.createTime.split('T')[1].split('.')[0]}}</span>
+          >{{ scope.row.createTime}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" prop="category.name" label="类别"></el-table-column>

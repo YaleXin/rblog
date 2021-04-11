@@ -20,7 +20,7 @@
             class="my-timeline-item"
             v-for="(blog, index1) in list.content"
             :key="index1"
-            :timestamp="blog.createTime.split('T')[0] +' '+ blog.createTime.split('T')[1].split('.')[0]"
+            :timestamp="blog.createTime.substr(5,99)"
           >
             <a
               target="_blank"

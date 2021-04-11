@@ -94,6 +94,7 @@ const routes = [
   {
     path: '/blog/:id',
     component: Article,
+    name: 'blog'
   },
   {
     path: '/search',

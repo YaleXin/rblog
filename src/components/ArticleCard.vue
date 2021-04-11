@@ -28,7 +28,8 @@
         <p>{{article.description}} ...</p>
       </div>
       <div class="readMore">
-        <a :href=" applicationPre() +  '/blog/'+article.id" class="readMore-btn">阅读全文 »</a>
+        <!-- <router-link class="readMore-btn" :to="{name: 'blog', params: { id: article.id }}">阅读全文 »</router-link> -->
+        <a class="readMore-btn" :href=" applicationPre() +  '/blog/'+article.id" >阅读全文 »</a>
       </div>
     </el-card>
   </div>
