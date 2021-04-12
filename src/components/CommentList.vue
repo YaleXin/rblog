@@ -21,7 +21,7 @@
             </span>
             <span class="comment-author">{{topCmt.nickname}}</span>
 
-            <span>{{topCmt.createTime.split('T')[0]}} {{topCmt.createTime.split('T')[1].split('.')[0]}}</span>
+            <span>{{topCmt.createTime}}</span>
 
             <span>{{topCmt.os}}</span>
             <span>{{topCmt.browser}}</span>
@@ -67,7 +67,7 @@
                     <span>博主</span>
                   </span>
                   <span class="comment-author">{{replyCmt.nickname}}</span>
-                  <span>{{replyCmt.createTime.split('T')[0]}} {{replyCmt.createTime.split('T')[1].split('.')[0]}}</span>
+                  <span>{{replyCmt.createTime}}</span>
                   <span>{{replyCmt.os}}</span>
                   <span>{{replyCmt.browser}}</span>
                 </div>
@@ -133,7 +133,7 @@ export default {
             nickname: "",
             email: "",
             content: "",
-            createTime: "2021-02-13T23:11:51.000+08:00",
+            createTime: "2021-02-13 23:11:51",
             os: "",
             browser: "",
             replyComments: [
@@ -142,7 +142,7 @@ export default {
                 nickname: "",
                 email: "",
                 content: "",
-                createTime: "2021-02-13T23:11:51.000+08:00",
+                createTime: "2021-02-13 23:11:51",
                 replyNickname: "",
                 content: "",
                 os: "",

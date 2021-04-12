@@ -10,7 +10,7 @@
         <template slot-scope="scope">
           <span
             style="margin-left: 10px"
-          >{{ scope.row.createTime.split('T')[0] }} {{scope.row.createTime.split('T')[1].split('.')[0]}}</span>
+          >{{ scope.row.createTime}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="评论者">
@@ -122,7 +122,7 @@ export default {
             nickname: "",
             email: "",
             content: "",
-            createTime: "2021-02-09T08:57:19.000+00:00",
+            createTime: "2021-02-09 08:57:19",
             audited: false,
             os: "",
             browser: "",
