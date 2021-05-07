@@ -16,6 +16,7 @@
 -  [vue-markdown](https://github.com/zhaoxuhui1122/vue-markdown) 
 - [今日诗词](https://www.jinrishici.com/)
 - [Font Awesome](http://www.fontawesome.com.cn/)
+- [`tocbot`](https://github.com/tscanlin/tocbot)
 - ...
 
 ## 你想要运行本项目？
