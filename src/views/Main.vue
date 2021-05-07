@@ -23,6 +23,9 @@ export default {
 </script>
 
 <style scoped>
+.box-card-wrapper{
+  background: url("../assets/img/bg.png")
+}
 .box-card {
   max-width: 1000px;
   margin: 0 auto;

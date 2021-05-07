@@ -20,7 +20,13 @@
         </div>
       </div>
       <el-divider></el-divider>
-      <div class="article-content typo" v-html="article.content">
+      <!-- 目录div -->
+      <el-popover placement="right"  trigger="hover" popper-class="toc-popper">
+        <div class="toc-container"></div>
+        <div slot="reference"  class="toc-wrapper animate__animated animate__backInLeft">目录</div>
+      </el-popover>
+
+      <div id="articleContent" class="article-content typo" v-html="article.content">
         <!-- v-html="article.content" -->
       </div>
       <el-divider></el-divider>
@@ -52,6 +58,7 @@ import innerHttp from "../network/innerHttp.js";
 import Appreciate from "../components/Appreciate.vue";
 import Comment from "../components/Comment.vue";
 import Prism from "prismjs";
+import tocbot from "tocbot";
 export default {
   name: "Article",
   components: {
@@ -89,6 +96,7 @@ export default {
             Prism.highlightAll();
             this.setTable();
             this.setFancyBox();
+            this.initTocbot();
           });
         } else {
           this.$message({
@@ -102,6 +110,22 @@ export default {
   },
 
   methods: {
+    initTocbot() {
+      setTimeout(() => {
+        tocbot.init({
+          //要把目录添加元素位置，支持选择器
+          tocSelector: ".toc-container",
+          //获取html的元素
+          contentSelector: "#articleContent",
+          //要显示的id的目录
+          headingSelector: "h1, h2, h3",
+          hasInnerContainers: true,
+          scrollSmooth: true,
+          scrollSmoothDuration: 420,
+          activeLinkClass: "toc-active-item"
+        });
+      }, 1000);
+    },
     applicationPre() {
       // return process.env.NODE_ENV === "production" ? "/blog" : "";
       return "/blog";
@@ -159,6 +183,7 @@ export default {
 
 <style scoped>
 @import "../assets/css/typo.css";
+@import "../assets/css/blog.css";
 
 .article-content >>> table {
   overflow-x: auto;
@@ -214,5 +239,7 @@ export default {
 .appreciate-wrapper {
   text-align: center;
 }
+
+
 
 </style>

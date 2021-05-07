@@ -32,7 +32,6 @@ Vue.component('font-awesome-layers', FontAwesomeLayers)
 Vue.component('font-awesome-layers-text', FontAwesomeLayersText)
 
 
-
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false

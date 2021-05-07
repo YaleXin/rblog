@@ -6,6 +6,7 @@
 <template>
   <el-backtop
     :bottom="60"
+    :right="20"
     class="animate__animated animate__backInRight "
   >
     <i class="fa fa-angle-double-up"></i>

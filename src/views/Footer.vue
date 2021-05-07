@@ -33,6 +33,7 @@ export default {
 <style scoped>
 .footer {
   text-align: center;
+    background: url("../assets/img/bg.png")
 }
 </style>
 

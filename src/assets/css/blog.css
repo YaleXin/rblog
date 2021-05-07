@@ -1,0 +1,35 @@
+.toc-wrapper {
+    left: 20px;
+    bottom: 60px;
+    align-items: center;
+    position: fixed;
+    background-color: #dddddd;
+    color: #409eff;
+    width: auto;
+    height: auto;
+    border-radius: 50%;
+    display: flex;
+    font-size: 20px;
+    box-shadow: 0 0 6px rgb(0 0 0 / 12%);
+    cursor: pointer;
+    z-index: 5;
+}
+
+.toc-container a {
+    text-decoration: none;
+    color: black;
+}
+
+.toc-popper {
+    width: auto;
+    font-size: 16px;
+    padding: 2px;
+}
+
+.toc-container ol {
+    padding-left: 8px;
+}
+
+.toc-popper .toc-active-item {
+    color: red;
+}
