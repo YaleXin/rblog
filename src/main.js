@@ -24,7 +24,10 @@ import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText }
 
  from '@fortawesome/vue-fontawesome'
 
+// 按需引入 echarts 5.x
+import echarts from './plugins/echartsUI'
 
+Vue.prototype.$echarts = echarts
 library.add(fas, far, fab)
  
 Vue.component('font-awesome-icon', FontAwesomeIcon)
