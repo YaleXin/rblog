@@ -17,6 +17,7 @@
 - [今日诗词](https://www.jinrishici.com/)
 - [Font Awesome](http://www.fontawesome.com.cn/)
 - [`tocbot`](https://github.com/tscanlin/tocbot)
+- [`Echarts之日历热力图`](https://echarts.apache.org/examples/zh/index.html#chart-type-heatmap)
 - ...
 
 ## 你想要运行本项目？
