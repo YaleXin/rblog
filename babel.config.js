@@ -9,7 +9,7 @@ module.exports = {
   ],
   plugins: [
     ["prismjs", {
-      "languages": ["javascript", "css", "markup", "c", "java", "clike", "json", "python", "cpp"],
+      "languages": ["javascript", "css", "markup", "c", "java", "clike", "json", "python", "cpp", "shell", "go"],
       "plugins": ["line-numbers", "show-language", "highlight-keywords", "match-braces","copy-to-clipboard"],
       "theme": "dark", 
       "css": true
