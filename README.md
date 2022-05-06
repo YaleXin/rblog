@@ -1,5 +1,5 @@
 # rblog
-
+** 前端加入Nuxt，利于搜索引擎爬取！[新仓库地址](https://github.com/YaleXin/rblogv2) **
 个人博客的前端项目，[演示地址](https://www.yalexin.top/blog)
 
 [后端地址](https://github.com/YaleXin/rblog-serv)
