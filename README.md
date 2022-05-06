@@ -1,5 +1,7 @@
+<h1 align="center">This repository is no longer maintained! :warning:</h1>
+<h2 align="center">The community-maintained version is here: <a href="https://github.com/YaleXin/rblogv2">rblogv2 :triangular_flag_on_post:</a></h2>
+
 # rblog
-** 前端加入Nuxt，利于搜索引擎爬取！[新仓库地址](https://github.com/YaleXin/rblogv2) **
 个人博客的前端项目，[演示地址](https://www.yalexin.top/blog)
 
 [后端地址](https://github.com/YaleXin/rblog-serv)
